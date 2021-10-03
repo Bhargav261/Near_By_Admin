@@ -1,0 +1,325 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+
+/* Floating CSS End */
+.floating{
+  width : 100%;
+  padding : 20px 0;
+  position : relative
+}
+
+.floating input{
+  width : 100%;
+  padding : 10px 10px;
+  display : block;
+  background : transparent;
+  outline : none;
+  font-size : 13px
+}	
+
+.floating label {
+  position: absolute;
+  top: -2px;
+  left : 12px;
+  color: #8a8888;
+  font-size : 12px;
+  font-weight : 100;
+  pointer-events : none;
+  transform : translateY(30px);
+  transition : all 200ms ease-in-out;
+}	
+
+.floating input:focus + label {
+  color : #142534;
+  font-size : 12px;
+  transform : translateY(12px);
+  left : 5px;
+  padding : 0px 5px;
+  background : white;
+}
+
+.floating input::placeholder {  
+  padding-left : 2px;
+  font-size : 12px;
+  font-weight : 100;
+  color: transparent;
+          } 
+
+.floating input:not(:placeholder-shown) + label {
+  color: #142534;
+  font-size : 12px;
+  transform : translateY(10px);
+  left : 5px;
+  padding : 0px 5px;
+  background : white;
+}
+
+
+.floating textarea:focus, .floating select:focus, .floating input:focus {
+  border-color : #142534;
+}
+
+.floating textarea:focus + label {
+  color : #142534;
+  font-size : 12px;
+  transform : translateY(12px);
+  left : 5px;
+  padding : 0px 5px;
+  background : white;
+}
+
+.floating textarea::placeholder {  
+  padding-left : 2px;
+  font-size : 12px;
+  font-weight : 100;
+  color: transparent;
+          } 
+
+.floating textarea:not(:placeholder-shown) + label {
+  color: #142534;
+  font-size : 12px;
+  transform : translateY(10px);
+  left : 5px;
+  padding : 0px 5px;
+  background : white;
+}
+
+.floating select{
+  width : 100%;
+  padding : 0px 10px;
+  display : block;
+  background : transparent;
+  outline : none;
+  font-size : 12px
+}	
+
+.floating .select {
+  position: absolute;
+  top: 0;
+  left : 5px;
+  font-size : 12px;
+  font-weight : 100;
+  pointer-events : none;
+  transform : translateY(10px);
+  transition : all 400ms ease-in-out;
+  padding : 0px 5px;
+  background : white;
+}	
+
+.form-control:focus{
+  border-color : #142534 !important;
+}
+
+/* Floating CSS End */
+
+
+
+::placeholder {
+  font-size: 12px;
+}
+
+.form-group{
+  /* margin-bottom: 0.7rem !important; */
+  margin-bottom: 0 !important;
+}
+
+.form-control{
+  font-size: 0.8rem !important;
+}
+
+.sidebar #sidebar_menu > li a{
+  font-size: 13px !important;
+  margin-top: 10px !important;
+}
+
+.white_card .white_card_header{
+  padding-bottom: 5px !important;
+}
+
+.button-custom{
+  padding-top: 4px !important;
+  font-size: 15px !important;
+  padding-bottom: 5px !important;
+}
+
+.serach_field-area .search_inner input{
+  border: 2px solid #fff !important;
+  color: #fff !important; 
+}
+
+.serach_field-area .search_inner button i{
+  color: white !important;
+}
+
+.search_input::placeholder {
+  color: white !important;
+}
+
+.header_iner{
+  padding: 15px !important;
+}
+
+
+.main_content .main_content_iner.overly_inner::before{
+  background: #00918e !important;
+}
+
+.QA_section .QA_table .table thead th{
+  color: #00918e !important;
+}
+
+.btn-primary{
+  background-color: #00918e !important ;
+  border-color: #00918e !important ;
+}
+
+.add-btn {
+  border: 1px solid #fff;
+  display: inline-block;
+  padding: 10px 13px !important;
+  text-transform: capitalize;
+  line-height: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 50%;
+  margin-right: 5px;
+  background-color: #fff;
+  white-space: nowrap;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+  background: #fff !important;
+  text-shadow: none !important;
+  opacity: 1;
+  color: #00918e;
+  box-shadow: 0 3px 11px rgba(0, 0, 0, 0.17);
+}
+
+
+.main_content{
+  padding-left: 230px;
+}
+
+.sidebar{
+  width: 230px;
+}
+
+.profile_info:hover .profile_info_iner{
+  top: 50px !important;
+  z-index: 1;
+  box-shadow: 1px 2px 9px 0px;
+}
+
+.profile_info .profile_info_iner{
+  width: 170px !important;
+}
+
+
+@media (max-width: 991px){
+.main_content {
+  padding-left: 0px !important;
+}
+}
+
+.profile_info .profile_info_iner .profile_author_name{
+  padding: 8px 25px !important;
+  background: #00918e !important;
+}
+
+.profile_info .profile_info_details{
+  padding: 4px 25px !important;
+}
+
+.mb-minus{
+  margin-bottom: -22px !important;
+}
+
+.modal-body{
+  padding-bottom: 0 !important;
+}
+
+.profile_info .profile_info_iner::before{
+  border-color: transparent transparent #00918e transparent;
+}
+
+.footer_part{
+  background: #00918e !important;
+}
+
+.footer_part .footer_iner.text-center{
+  background: #00918e !important;
+}
+
+
+
+
+.modal-header{
+  background: #00918e;
+  color: white !important;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+}
+
+.modal-content{
+  border-radius: 20px !important;
+  border: 0px !important;
+}
+
+.close{
+  color: #00918e !important;
+  opacity: 1 !important;
+}
+
+.modal-title{
+  font-size: 20px !important;
+}
+
+.modal-header .close{
+  padding: 1rem 1rem !important;
+  margin: -1.5rem -1.5rem -1.5rem auto !important;
+  background: white !important;
+  padding-right: 5px !important;
+  border-radius: 33px !important;
+  padding-left: 5px !important;
+  padding-top: 0px !important;
+  padding-bottom: 3px !important;
+}
+
+.sidebar #sidebar_menu > li a.active{
+  color: #00918e !important
+}
+
+.btn_1{
+  background-color: #00918e !important;
+  border: 1px solid #00918e !important;
+}
+
+.login-width{
+  min-width: 400px;
+  max-width: 400px;
+  margin-top: 55px;
+}
+
+.flex{
+  display: flex;
+}
+
+.mt_60{
+  margin-top: 60px;
+}
+
+.body-radius{
+  border-bottom-left-radius: 20px !important;
+  border-bottom-right-radius: 20px !important;
+}
