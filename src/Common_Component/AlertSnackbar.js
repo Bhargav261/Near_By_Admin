@@ -10,6 +10,8 @@ const AlertSnackBar = () => {
 
     const { type, status, msg } = useSelector(state => state.Alert);
 
+    console.log("type, status, msg", type, status, msg);
+
     useEffect(() => {
         if (status) {
             if(type == 'success'){
