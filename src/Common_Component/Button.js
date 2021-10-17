@@ -35,6 +35,22 @@ const Button = ({ variant, label, onClick, isLoading, ...rest }) => {
                 )
             }
 
+            {
+                variant == 'fa-edit' && (
+                    <div onClick={onClick} {...rest}>
+                        <i className="fas fa-edit cursor-pointer" style={{fontSize : '11px'}}></i>
+                    </div>
+                )
+            }
+
+{
+                variant == 'fa-trash' && (
+                    <div onClick={onClick} {...rest}>
+                        <i className="ti-trash cursor-pointer" style={{fontSize : '11px'}}></i>
+                    </div>
+                )
+            }
+
         </>
     )
 }

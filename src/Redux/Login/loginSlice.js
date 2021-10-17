@@ -29,7 +29,7 @@ export const LoginAPI = createAsyncThunk('Login API CALL', async ({ email, passw
             dispatch(SuccessAlert(responseData.msg));
             return response;
         } else {
-            dispatch(ErrorAlert(responseData.message));
+            dispatch(ErrorAlert(responseData.msg));
             return rejectWithValue({ message: 'No Data Found' });
         }
     }

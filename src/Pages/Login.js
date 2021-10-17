@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { LoginAPI, loginStatus } from '../Redux/Login/loginSlice';
 import { ErrorAlert, SuccessAlert } from '../Redux/SanckBar/SnackbarSlice';
+import auth from '../Route/Auth';
 
 const Login = () => {
 
@@ -11,8 +12,7 @@ const Login = () => {
     const dispatch = useDispatch();
 
     //get data from store
-	const {isLoginStatus } = useSelector(state => state.login);
-
+    const { isLoginStatus } = useSelector(state => state.login);    
 
     //State Manage
     const [form, setForm] = useState({ email: '', password: '' });
@@ -20,6 +20,9 @@ const Login = () => {
     //useeffect
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (auth.isAuthenticated()) {
+            history.push('/app/dashboard');
+        }
         dispatch(loginStatus(false));
     }, [])
 
@@ -29,8 +32,8 @@ const Login = () => {
                 email: '',
                 password: ''
             });
+            history.push('/app/dashboard');
             dispatch(loginStatus(false));
-            history.push('/');
         }
     }, [isLoginStatus])
 
@@ -48,9 +51,9 @@ const Login = () => {
     //Click on Login
     const login = (e) => {
         e.preventDefault();
-        if(form.email != "" && form.password != ""){
+        if (form.email != "" && form.password != "") {
             dispatch(LoginAPI({ email: form.email, password: form.password }));
-        }else{
+        } else {
             dispatch(ErrorAlert('Please Enter Email and Password !!'))
         }
     }

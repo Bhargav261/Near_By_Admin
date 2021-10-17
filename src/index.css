@@ -323,3 +323,17 @@ code {
   border-bottom-left-radius: 20px !important;
   border-bottom-right-radius: 20px !important;
 }
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
+.color-green{
+  color: green;
+  font-weight: 500;
+}
+
+.color-red{
+  color: red;
+  font-weight: 500;
+}
