@@ -91,7 +91,7 @@ const Add_Category = ({ closeModal }) => {
 
     return (
         <>
-            <Modal show={show} onHide={handleClose} centered>
+            <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Add Category</Modal.Title>
                 </Modal.Header>

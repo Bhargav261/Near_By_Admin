@@ -337,3 +337,29 @@ code {
   color: red;
   font-weight: 500;
 }
+
+.template-color{
+  color: #00918e
+}
+
+.text-align-center{
+  text-align: center;
+}
+
+.justify-space-between{
+  display: flex;
+  justify-content: space-between;
+}
+
+.text-align-right{
+  text-align: right;
+}
+
+.text-align-left{
+  text-align: left;
+}
+
+.justify-center{
+  display: flex;
+  justify-content: center;
+}

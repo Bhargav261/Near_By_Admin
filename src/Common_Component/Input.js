@@ -4,7 +4,7 @@ const Input = ({ type, label, name, placeholder, onChange, required, readOnly, v
     return (
         <>
             {
-                (type == "text" || type == "password" || type == "text" || type == "email") && (
+                (type == "text" || type == "password" || type == "number" || type == "email") && (
                     <>
                         <div class="floating">
                             <input type={type} name={name} class="form-control" id={label} value={value} onChange={onChange} placeholder={placeholder} required={required} readOnly={readOnly} {...rest} />

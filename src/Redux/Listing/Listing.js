@@ -55,7 +55,7 @@ export const AddCategoryAPI = createAsyncThunk('Add CategoryAPI Call', async ({ 
     }
 });
 
-//Delete Category
+//Change Staus Category
 export const deleteCategoryAPI = createAsyncThunk('Delete CategoryAPI Call', async ({ id }, { dispatch, rejectWithValue }) => {
     console.log("Delete Category API :- ", id);
     try {
@@ -85,11 +85,107 @@ export const changeStatusAPI = createAsyncThunk('Change SttausAPI Call', async (
     try {
         const response = await axios.post("admin/changeCategoryStatus", {
             id: id,
-            status : status
+            status: status
         });
         const responseData = response.data;
 
         console.log("responseData :- ", responseData);
+
+        if (responseData.status === "success") {
+            dispatch(SuccessAlert(responseData.msg));
+            return response;
+        } else {
+            dispatch(ErrorAlert(responseData.msg));
+            return rejectWithValue({ message: 'No Data Found' });
+        }
+    }
+    catch (e) {
+        dispatch(ErrorAlert('Something Want Wrong!!'));
+    }
+});
+
+
+
+//View Plan
+export const PlanListAPI = createAsyncThunk('Plan Listing API Call', async ({ data }, { dispatch, rejectWithValue }) => {
+    try {
+
+        const response = await axios.post("admin/plan");
+        const responseData = response.data;
+
+        if (responseData.status === "success") {
+            dispatch(SuccessAlert(responseData.msg));
+            return response;
+        } else {
+            dispatch(ErrorAlert(responseData.msg));
+            return rejectWithValue({ message: 'No Data Found' });
+        }
+    }
+    catch (e) {
+        dispatch(ErrorAlert('Something Want Wrong!!'));
+    }
+});
+
+//Add Edit Plan
+export const AddPlanAPI = createAsyncThunk('Add Plan Call', async ({ id, name, planType, price, status }, { dispatch, rejectWithValue }) => {
+    try {
+
+        const response = await axios.post("admin/addEditPlan",
+            {
+                id: id,
+                name: name,
+                price: price,
+                type : planType,
+                status: true
+            });
+
+        const responseData = response.data;
+
+        if (responseData.status === "success") {
+            dispatch(SuccessAlert(responseData.msg));
+            return response;
+        } else {
+            dispatch(ErrorAlert(responseData.msg));
+            return rejectWithValue({ message: 'No Data Found' });
+        }
+    }
+    catch (e) {
+        dispatch(ErrorAlert('Something Want Wrong!!'));
+    }
+});
+
+//Delete Plan
+export const deletePlanAPI = createAsyncThunk('Delete PlanAPI Call', async ({ id }, { dispatch, rejectWithValue }) => {
+    try {
+        const response = await axios.post("admin/deletePlan", {
+            id: id
+        });
+        const responseData = response.data;
+
+        console.log("responseData :- ", responseData);
+
+        if (responseData.status === "success") {
+            dispatch(SuccessAlert(responseData.msg));
+            return response;
+        } else {
+            dispatch(ErrorAlert(responseData.msg));
+            return rejectWithValue({ message: 'No Data Found' });
+        }
+    }
+    catch (e) {
+        dispatch(ErrorAlert('Something Want Wrong!!'));
+    }
+});
+
+//Change Status Plan
+export const changeStatusPlanAPI = createAsyncThunk('Change Status Plan API Call', async ({ id, status }, { dispatch, rejectWithValue }) => {
+
+    try {
+        const response = await axios.post("admin/changePlanStatus", {
+            id: id,
+            status: status
+        });
+        const responseData = response.data;
 
         if (responseData.status === "success") {
             dispatch(SuccessAlert(responseData.msg));
@@ -112,7 +208,13 @@ export const slice = createSlice({
         categoryResource: [],
         isAddCategoryStatus: false,
         isDeleteCategory: false,
-        isChangeStatusAPI: false
+        isChangeStatusAPI: false,
+
+        isPlanStatus: false,
+        planResource: [],
+        isAddPlanStatus: false,
+        isDeletePlan: false,
+        isChangePlanStatusAPI: false
     },
     reducers: {
         categoryStatus: (state, action) => {
@@ -126,6 +228,19 @@ export const slice = createSlice({
         },
         changeStatusData: (state, action) => {
             state.isChangeStatusAPI = action.payload;
+        },
+
+        planStatus: (state, action) => {
+            state.isPlanStatus = action.payload;
+        },
+        addPlanStatus: (state, action) => {
+            state.isAddPlanStatus = action.payload;
+        },
+        deletePlanStatus: (state, action) => {
+            state.isDeletePlan = action.payload;
+        },
+        changePlanStatusData: (state, action) => {
+            state.isChangePlanStatusAPI = action.payload;
         },
     },
     extraReducers: {
@@ -154,10 +269,41 @@ export const slice = createSlice({
         },
         [changeStatusAPI.rejected]: (state, action) => {
             state.isChangeStatusAPI = false;
+        },
+
+
+        [PlanListAPI.fulfilled]: (state, action) => {
+            state.isPlanStatus = true;
+            // state.planResource = action.payload.data.payload.data.data;
+            state.planResource = [];
+        },
+        [PlanListAPI.rejected]: (state, action) => {
+            state.isPlanStatus = false;
+            state.planResource = [];
+        },
+        [AddPlanAPI.fulfilled]: (state, action) => {
+            state.isAddPlanStatus = true;
+        },
+        [AddPlanAPI.rejected]: (state, action) => {
+            state.isAddPlanStatus = false;
+        },
+        [deletePlanAPI.fulfilled]: (state, action) => {
+            state.isDeletePlan = true;
+        },
+        [deletePlanAPI.rejected]: (state, action) => {
+            state.isDeletePlan = false;
+        },
+        [changeStatusPlanAPI.fulfilled]: (state, action) => {
+            state.isChangePlanStatusAPI = true;
+        },
+        [changeStatusPlanAPI.rejected]: (state, action) => {
+            state.isChangePlanStatusAPI = false;
         }
     }
 });
 
-export const { categoryStatus, addCategoryStatus, deleteCategoryStatus, changeStatusData } = slice.actions;
+export const { categoryStatus, addCategoryStatus, deleteCategoryStatus, changeStatusData,
+    planStatus, addPlanStatus, deletePlanStatus, changePlanStatusData
+} = slice.actions;
 
 export default slice.reducer;

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import VendorListing from "./Vendor_Listing";
+import { NavLink } from 'react-router-dom'
 
 const Dashboard = props => {
 
@@ -29,16 +30,17 @@ const Dashboard = props => {
                     <div class="row ">
 
                         <div class="col-lg-4">
-                            <div class="white_card card_height_100 mb_20 mb-minus cursor-pointer">
-                                <div class="white_card_header">
-                                    <div class="box_header m-0">
-                                        <div class="main-title">
-                                            <h3 class="m-0">New Request</h3>
-                                        </div>
-                                        <div>
-                                            <i className="fa fa-arrow-right"></i>
-                                        </div>
-                                        {/* <div class="float-lg-right float-none sales_renew_btns justify-content-end">
+                            <NavLink to="/app/request/newRequest">
+                                <div class="white_card card_height_100 mb_20 mb-minus cursor-pointer">
+                                    <div class="white_card_header">
+                                        <div class="box_header m-0">
+                                            <div class="main-title">
+                                                <h3 class="m-0">New Request</h3>
+                                            </div>
+                                            <div>
+                                                <i className="fa fa-arrow-right"></i>
+                                            </div>
+                                            {/* <div class="float-lg-right float-none sales_renew_btns justify-content-end">
                                             <ul class="nav">
                                                 <li class="nav-item">
                                                     <a class="nav-link active" href="#">Today</a>
@@ -48,27 +50,29 @@ const Dashboard = props => {
                                                 </li>
                                             </ul>
                                         </div> */}
+                                        </div>
+                                    </div>
+                                    <div class="white_card_body d-flex align-items-center" style={{ height: '140px' }}  >
+                                        <h4 class="f_w_900 f_s_60 mb-0 mr-2" style={{ fontSize: '34px' }} >356</h4>
+                                        <div class="w-100" style={{ height: '100px' }} >
+                                            <canvas width="100%" id="page_views" ></canvas>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="white_card_body d-flex align-items-center" style={{ height: '140px' }}  >
-                                    <h4 class="f_w_900 f_s_60 mb-0 mr-2" style={{ fontSize: '34px' }} >356</h4>
-                                    <div class="w-100" style={{ height: '100px' }} >
-                                        <canvas width="100%" id="page_views" ></canvas>
-                                    </div>
-                                </div>
-                            </div>
+                            </NavLink>
                         </div>
                         <div class="col-lg-4">
-                            <div class="white_card card_height_100 mb_20 mb-minus cursor-pointer">
-                                <div class="white_card_header">
-                                    <div class="box_header m-0">
-                                        <div class="main-title">
-                                            <h3 class="m-0">Pending Request</h3>
-                                        </div>
-                                        <div>
-                                            <i className="fa fa-arrow-right"></i>
-                                        </div>
-                                        {/* <div class="float-lg-right float-none sales_renew_btns justify-content-end">
+                            <NavLink to="/app/request/pendingRequest">
+                                <div class="white_card card_height_100 mb_20 mb-minus cursor-pointer">
+                                    <div class="white_card_header">
+                                        <div class="box_header m-0">
+                                            <div class="main-title">
+                                                <h3 class="m-0">Payment Pending Request</h3>
+                                            </div>
+                                            <div>
+                                                <i className="fa fa-arrow-right"></i>
+                                            </div>
+                                            {/* <div class="float-lg-right float-none sales_renew_btns justify-content-end">
                                             <ul class="nav">
                                                 <li class="nav-item">
                                                     <a class="nav-link active" href="#">Today</a>
@@ -78,27 +82,29 @@ const Dashboard = props => {
                                                 </li>
                                             </ul>
                                         </div> */}
+                                        </div>
+                                    </div>
+                                    <div class="white_card_body d-flex align-items-center" style={{ height: '140px' }}  >
+                                        <h4 class="f_w_900 f_s_60 mb-0 mr-2" style={{ fontSize: '34px' }} >356</h4>
+                                        <div class="w-100" style={{ height: '100px' }} >
+                                            <canvas width="100%" id="page_views" ></canvas>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="white_card_body d-flex align-items-center" style={{ height: '140px' }}  >
-                                    <h4 class="f_w_900 f_s_60 mb-0 mr-2" style={{ fontSize: '34px' }} >356</h4>
-                                    <div class="w-100" style={{ height: '100px' }} >
-                                        <canvas width="100%" id="page_views" ></canvas>
-                                    </div>
-                                </div>
-                            </div>
+                            </NavLink>
                         </div>
                         <div class="col-lg-4">
-                            <div class="white_card card_height_100 mb_20 mb-minus cursor-pointer">
-                                <div class="white_card_header">
-                                    <div class="box_header m-0">
-                                        <div class="main-title">
-                                            <h3 class="m-0">Cancel Request</h3>
-                                        </div>
-                                        <div>
-                                            <i className="fa fa-arrow-right"></i>
-                                        </div>
-                                        {/* <div class="float-lg-right float-none sales_renew_btns justify-content-end">
+                            <NavLink to="/app/request/cancelRequest">
+                                <div class="white_card card_height_100 mb_20 mb-minus cursor-pointer">
+                                    <div class="white_card_header">
+                                        <div class="box_header m-0">
+                                            <div class="main-title">
+                                                <h3 class="m-0">Cancel Request</h3>
+                                            </div>
+                                            <div>
+                                                <i className="fa fa-arrow-right"></i>
+                                            </div>
+                                            {/* <div class="float-lg-right float-none sales_renew_btns justify-content-end">
                                             <ul class="nav">
                                                 <li class="nav-item">
                                                     <a class="nav-link active" href="#">Today</a>
@@ -108,15 +114,16 @@ const Dashboard = props => {
                                                 </li>
                                             </ul>
                                         </div> */}
+                                        </div>
+                                    </div>
+                                    <div class="white_card_body d-flex align-items-center" style={{ height: '140px' }}  >
+                                        <h4 class="f_w_900 f_s_60 mb-0 mr-2" style={{ fontSize: '34px' }} >356</h4>
+                                        <div class="w-100" style={{ height: '100px' }} >
+                                            <canvas width="100%" id="page_views" ></canvas>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="white_card_body d-flex align-items-center" style={{ height: '140px' }}  >
-                                    <h4 class="f_w_900 f_s_60 mb-0 mr-2" style={{ fontSize: '34px' }} >356</h4>
-                                    <div class="w-100" style={{ height: '100px' }} >
-                                        <canvas width="100%" id="page_views" ></canvas>
-                                    </div>
-                                </div>
-                            </div>
+                            </NavLink>
                         </div>
 
                         <div class="col-lg-12">

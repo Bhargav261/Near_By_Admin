@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import VendorModal from './VendorModal';
 
-const VendorListing = () => {
+const VendorListing = ({ type }) => {
 
+    //Temp Data
     const demo = [{
         vname: 'ABC',
         category: 'salon',
@@ -15,11 +17,29 @@ const VendorListing = () => {
         contactNumber: '2068765756'
     }]
 
+    //Manage State
+    const [viewStatus, setViewStatus] = useState(false);
+    const [viewInfo, setViewInfo] = useState('');
+
+    //Functions
+
+    //Click on View Details
+    const clickOnView = (data) => {
+        console.log("Click on View");
+        setViewInfo(data);
+        setViewStatus(true);
+    }
+
+    //Close Modal
+    const closeModal = () => {
+        setViewStatus(false);
+        console.log("Close Modal");
+    }
+
     return (
         <>
             <div class="white_card_body QA_section">
                 <div class="QA_table ">
-
                     <table class="table lms_table_active2 p-0">
                         <thead>
                             <tr>
@@ -41,7 +61,16 @@ const VendorListing = () => {
                                         <td class="f_s_14 f_w_400">{item.shopName}</td>
                                         <td class="f_s_14 f_w_400">{item.contactNumber}</td>
                                         <td class="f_s_14 f_w_400">
-                                            <div className="cursor-pointer"><i className="fa fa-eye"></i></div>
+                                            {
+                                                type == 'cancelRequest' ?
+                                                    <div className="cursor-pointer" title='Cancel Request'>
+                                                        <span className="color-red">Reject</span>
+                                                    </div>
+                                                    :
+                                                    <div className="cursor-pointer" onClick={() => clickOnView(item)} title='View More Details'>
+                                                        <i className="fa fa-eye template-color"></i>
+                                                    </div>
+                                            }
                                         </td>
                                     </tr>
                                 ))
@@ -50,6 +79,12 @@ const VendorListing = () => {
                     </table>
                 </div>
             </div>
+
+            {
+                viewStatus && (
+                    <VendorModal closeModal={closeModal} viewInfo={viewInfo} />
+                )
+            }
         </>
     )
 }

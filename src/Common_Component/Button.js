@@ -24,6 +24,22 @@ const Button = ({ variant, label, onClick, isLoading, ...rest }) => {
             }
 
             {
+                variant == 'accept-button' && (
+                    <button disabled={isLoading} type="button" class="btn btn-primary button-custom" onClick={onClick} {...rest} >
+                        <i className="fa fa-check"></i>
+                    </button>
+                )
+            }
+
+            {
+                variant == 'reject-button' && (
+                    <button disabled={isLoading} type="button" class="btn btn-primary button-custom" onClick={onClick} {...rest} >
+                        <i className="fa fa-times"></i>
+                    </button>
+                )
+            }
+
+            {
                 variant == 'addbtn' && (
                     <button class="add-btn" onClick={onClick} {...rest} ><i className="fa fa-plus"></i></button>
                 )
@@ -38,15 +54,15 @@ const Button = ({ variant, label, onClick, isLoading, ...rest }) => {
             {
                 variant == 'fa-edit' && (
                     <div onClick={onClick} {...rest}>
-                        <i className="fas fa-edit cursor-pointer" style={{fontSize : '11px'}}></i>
+                        <i className="fas fa-edit cursor-pointer" style={{ fontSize: '11px' }}></i>
                     </div>
                 )
             }
 
-{
+            {
                 variant == 'fa-trash' && (
                     <div onClick={onClick} {...rest}>
-                        <i className="ti-trash cursor-pointer" style={{fontSize : '11px'}}></i>
+                        <i className="ti-trash cursor-pointer" style={{ fontSize: '11px' }}></i>
                     </div>
                 )
             }

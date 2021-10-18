@@ -1,96 +1,104 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../Common_Component/Button';
 import Search from '../Common_Component/Search';
-import { Modal } from 'react-bootstrap'
-import Add_Category from './Add_Category';
+import { Modal } from 'react-bootstrap';
+import AddPlan from './Add_Plan';
 import { useSelector, useDispatch } from 'react-redux';
-import { CategoryListAPI, deleteCategoryAPI, deleteCategoryStatus, changeStatusAPI, changeStatusData } from '../Redux/Listing/Listing';
+import { PlanListAPI, deletePlanAPI, deletePlanStatus, changeStatusPlanAPI, changePlanStatusData } from '../Redux/Listing/Listing';
 
-const Category_List = () => {
+const Plan = () => {
+
+    //Temp Data
+    const planDetails = [
+        {
+            name: 'Gold',
+            price: '100$',
+            status: true
+        },
+        {
+            name: 'Silver',
+            price: '50$',
+            status: false
+        }
+    ]
 
     //Object
     const dispatch = useDispatch();
 
     //get data from store
-    const { isCategoryStatus, isChangeStatusAPI, categoryResource, isDeleteCategory } = useSelector(state => state.category);
+    const { isPlanStatus, isChangePlanStatusAPI, planResource, isDeletePlan } = useSelector(state => state.category);
 
-    console.log("categoryResource :- ", categoryResource);
-
-    //State Manage
-    const [callAPI, setCallAPI] = useState(false);
+    //Manage Status
     const [search, setSearch] = useState('');
     const [show, setShow] = useState(false);
-    const [categoryView, setCategoryView] = useState([]);
     const [viewModalStatus, setViewModalStatus] = useState(false);
+    const [callAPI, setCallAPI] = useState(false);
+    const [viewPlan, setViewPlan] = useState([]);
     const [editData, setEditData] = useState({
         deleteID: '',
         data: '',
         type: ''
-    })
+    });
 
-    //useeffect
-    useEffect(() => {
+     //useeffect
+     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        dispatch(deleteCategoryStatus(false));
+        dispatch(deletePlanStatus(false));
     }, [])
 
     useEffect(() => {
-        dispatch(CategoryListAPI({ data: 'ABC' }));
+        dispatch(PlanListAPI({ data: 'ABC' }));
     }, [callAPI])
 
     useEffect(() => {
-        setCategoryView(categoryResource)
-    }, [categoryResource])
+        setViewPlan(planResource)
+    }, [planResource])
 
     useEffect(() => {
-        if(isDeleteCategory){
+        if(isDeletePlan){
             setCallAPI(!callAPI);
             handleClose();
-            dispatch(deleteCategoryStatus(false));
+            dispatch(deletePlanStatus(false));
         }
-    },[isDeleteCategory])
+    },[isDeletePlan])
 
     useEffect(() => {
-        if(isChangeStatusAPI){
+        if(isChangePlanStatusAPI){
             setCallAPI(!callAPI);
-            dispatch(changeStatusData(false));
+            dispatch(changePlanStatusData(false));
         }
-    },[isChangeStatusAPI])
+    },[isChangePlanStatusAPI])
 
     //Functions
 
-    //onChnage Handler
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setSearch(value);
+    //Handlee Chnage
+    const handleChange = () => {
+        console.log("handle change :- ");
     }
 
-    //Add Event Click
+    //click on Add
     const addEvent = () => {
-        console.log("addEvent Call");
-        editData.type = 'add';
+        editData.type = "add";
         setViewModalStatus(true);
     }
 
-    //Click on Edit
+    //CLick on Edit
     const clickonEdit = (item) => {
-        console.log("Click on Edit");
-        editData.type = 'edit';
-        editData.data = item;
+        editData.type = "edit";
+        editData.data = { item };
         setViewModalStatus(true);
     }
 
     //Click on Delete
     const clickonDelete = (item) => {
-        console.log("Click on Trash");
-        editData.deleteID = item._id;
+        editData.deleteID = "";
         handleShow();
     }
 
-    //Close Delete Modal
-    const handleClose = () => {
-        editData.deleteID = '';
-        setShow(false)
+    //Click On Change Status
+    const changeStatus = (id, status) => {
+        dispatch(changeStatusPlanAPI({id : id, status : !status}))
+        console.log("clickon Change Status :- ");
     }
 
     //Show Delete Modal
@@ -98,33 +106,32 @@ const Category_List = () => {
         setShow(true)
     }
 
-    //Close Modal
-    const closeModal = () => {
-        console.log('Close Modal');
-        editData.type = '';
-        editData.data = '';
-        setViewModalStatus(false);
-        setCallAPI(!callAPI)
+    //Close Delete Modal
+    const handleClose = () => {
+        setShow(false)
     }
 
     //Click on Yes Button
     const handleYesClick = () => {
-        dispatch(deleteCategoryAPI({ id: editData.deleteID }));
+        dispatch(deletePlanAPI({ id: editData.deleteID }));
     }
 
-    //Click on Chnage Status
-    const changeStatus = (id, status) => {
-        console.log("Change Status :- ");
-        dispatch(changeStatusAPI({id : id, status : !status}))
+    //Close Modal
+    const closeModal = () => {
+        setEditData({
+            deleteID: '',
+            data: '',
+            type: ''
+        })
+        setViewModalStatus(false);
     }
 
     return (
         <>
-
             {/* Delete Modal */}
             <Modal show={show} onHide={handleClose} animation={false}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Delete Category</Modal.Title>
+                    <Modal.Title>Delete Plan</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>Are You Sure Want to Delete ??</Modal.Body>
                 <Modal.Footer>
@@ -140,7 +147,7 @@ const Category_List = () => {
                         <div class="col-12">
                             <div class="page_title_box d-flex align-items-center justify-content-between">
                                 <div class="page_title_left">
-                                    <h3 class="f_s_30 f_w_700 text_white" >Category</h3>
+                                    <h3 class="f_s_30 f_w_700 text_white" >Plan</h3>
                                 </div>
                                 <Search
                                     placeholder="Search Anything"
@@ -163,19 +170,19 @@ const Category_List = () => {
                                                 <thead>
                                                     <tr>
                                                         <th scope="col">Id</th>
-                                                        <th scope="col">Category Image</th>
-                                                        <th scope="col">Category Name</th>
+                                                        <th scope="col">Plan Name</th>
+                                                        <th scope="col">Plan Price</th>
                                                         <th scope="col">Status</th>
                                                         <th scope="col">Action</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        categoryView.length > 0 && categoryView.map((item, index) => (
+                                                        planDetails && planDetails.length > 0 && planDetails && planDetails.map((item, index) => (
                                                             <tr>
                                                                 <th scope="row">{index + 1}</th>
-                                                                <td><img src="/img/banner.png" style={{ height: '30px', width: '80px' }} /></td>
                                                                 <td>{item.name}</td>
+                                                                <td>{item.price}</td>
                                                                 <td>{item.status ? <div className="color-green cursor-pointer" onClick={() => changeStatus(item._id, item.status)}>Active</div> : <div className="color-red cursor-pointer" onClick={() => changeStatus(item._id, item.status)}>Inactive</div>}</td>
                                                                 <td class="flex">
                                                                     <div class="mr-2">
@@ -206,12 +213,11 @@ const Category_List = () => {
 
             {
                 viewModalStatus && (
-                    <Add_Category editData={editData} closeModal={closeModal} />
+                    <AddPlan editData={editData} closeModal={closeModal} />
                 )
             }
-
         </>
     )
 }
 
-export default Category_List;
+export default Plan;

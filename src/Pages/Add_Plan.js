@@ -1,45 +1,42 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Input, Select } from '../Common_Component'
-import { Modal } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap';
 import { ErrorAlert, SuccessAlert } from '../Redux/SanckBar/SnackbarSlice';
-import { addCategoryStatus, AddCategoryAPI } from '../Redux/Listing/Listing';
+import { addPlanStatus, AddPlanAPI } from '../Redux/Listing/Listing';
 import { useSelector, useDispatch } from 'react-redux';
 
-const Add_Category = ({ editData, closeModal }) => {
+
+const AddPlan = ({ editData, closeModal }) => {
 
     //Objects
     const dispatch = useDispatch();
 
     //get data from store
-    const { isAddCategoryStatus } = useSelector(state => state.category);
-
-    console.log("Edit Data :- ", editData);
+    const { isAddPlanStatus } = useSelector(state => state.category);
 
     //State Manage
     const [isLoading, setIsLoading] = useState(false);
     const [show, setShow] = useState(false);
     const [form, setForm] = useState({
         id: '',
-        name: ''
+        name: '',
+        price: '',
+        type: ''
     })
 
     //Useeffect
     useEffect(() => {
-        dispatch(addCategoryStatus(false));
+        dispatch(addPlanStatus(false));
         handleShow();
         if (editData.type == 'edit') {
             setForm({
                 ...form,
-                name: editData?.data?.name
+                name: editData?.data?.name,
+                price: '',
+                type: ''
             })
         }
     }, [])
-
-    useEffect(() => {
-        if(isAddCategoryStatus){
-            handleClose();   
-        }
-    },[isAddCategoryStatus])
 
     //Functions
 
@@ -68,14 +65,9 @@ const Add_Category = ({ editData, closeModal }) => {
         e.preventDefault();
         console.log("Form : -", form);
         setIsLoading(true);
-        // setTimeout(() => {
-        //     setIsLoading(false); 
-        // }, 3000);
-        // console.log("Form : -", form);
-        if (form.name != '') {
-            console.log("call in if");
-            dispatch(AddCategoryAPI(
-                { id: editData.type == 'edit' ? (editData.data._id) : '', type: editData.type, name: form.name }
+        if (form.name != '' && form.type != "" && form.price != '') {
+            dispatch(AddPlanAPI(
+                { id: editData.type == 'edit' ? (editData.data._id) : '', type: editData.type, name: form.name, planType: form.type, price: form.price }
             ));
         } else {
             dispatch(ErrorAlert('Please Enter Category !!'))
@@ -90,9 +82,9 @@ const Add_Category = ({ editData, closeModal }) => {
                     <Modal.Title>
                         {
                             editData.type == 'add' ?
-                                'Add Category'
+                                'Add Plan'
                                 :
-                                'Edit Category'
+                                'Edit Plan'
                         }
                     </Modal.Title>
                 </Modal.Header>
@@ -100,7 +92,13 @@ const Add_Category = ({ editData, closeModal }) => {
                     <form onSubmit={formSubmit} method="post" autoComplete="Off">
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <Input type="text" value={form.name} label="Category Name" name="name" placeholder="Enter Category" onChange={handleFormChange} required />
+                                <Input type="text" value={form.name} label="Plan Name" name="name" placeholder="Enter Plan Name" onChange={handleFormChange} required />
+                            </div>
+                            <div class="form-group col-md-12">
+                                <Input type="text" value={form.type} label="Plan Type" name="type" placeholder="Enter Plan Tyoe" onChange={handleFormChange} required />
+                            </div>
+                            <div class="form-group col-md-12">
+                                <Input type="number" value={form.price} label="Plan Price" name="price" placeholder="Enter Plan Price" onChange={handleFormChange} required />
                             </div>
                         </div>
                         <Modal.Footer>
@@ -113,4 +111,4 @@ const Add_Category = ({ editData, closeModal }) => {
     )
 }
 
-export default Add_Category;
+export default AddPlan;

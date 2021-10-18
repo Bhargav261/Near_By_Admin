@@ -8,6 +8,8 @@ import AppPage from '../Pages/AppPage';
 import Tables from '../Pages/Tables';
 import Category_List from '../Pages/Category_List';
 import AdminPrivateRoute from './AdminPrivateRoute';
+import ViewRequest from '../Pages/ViewRequest';
+import Plan from '../Pages/Plan';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Counter from '../Pages/Counter';
 
@@ -29,6 +31,12 @@ const AdminRoute = () => {
                     </AdminPrivateRoute>
                     <AdminPrivateRoute exact path="/app/category">
                         <Category_List />
+                    </AdminPrivateRoute>
+                    <AdminPrivateRoute exact path="/app/request/:name">
+                        <ViewRequest />
+                    </AdminPrivateRoute>
+                    <AdminPrivateRoute exact path="/app/plan">
+                        <Plan />
                     </AdminPrivateRoute>
                     <Redirect to="/Dashboard" />
                 </Switch>
