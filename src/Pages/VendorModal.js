@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import Button from '../Common_Component/Button';
 import { Modal, Row, Col } from 'react-bootstrap';
+import { vendorShopRequestStatus, VendorShopRequestAPI } from '../Redux/Listing/Listing';
+import { useSelector, useDispatch } from 'react-redux';
 
-const VendorModal = ({ closeModal, viewInfo }) => {
+const VendorModal = ({ closeModal, viewInfo, type }) => {
 
     console.log("Close Modal, viewInfo :- ", viewInfo);
+
+    //Objects
+    const dispatch = useDispatch();
+
+    //get data from store
+    const { isVendorShopRequest } = useSelector(state => state.category);
+
 
     //State Manage
     const [isLoading, setIsLoading] = useState(false);
@@ -13,7 +22,15 @@ const VendorModal = ({ closeModal, viewInfo }) => {
     //Useeffect
     useEffect(() => {
         handleShow();
+        dispatch(vendorShopRequestStatus(false));
     }, [])
+
+    useEffect(() => {
+        if (isVendorShopRequest) {
+            dispatch(vendorShopRequestStatus(false));
+            handleClose();
+        }
+    }, [isVendorShopRequest])
 
     //Functions
 
@@ -29,15 +46,18 @@ const VendorModal = ({ closeModal, viewInfo }) => {
     }
 
     //Accept Request
-    const acceptReq = () =>{
+    const acceptReq = (id) => {
         console.log("Accept Request");
+        dispatch(VendorShopRequestAPI({ id: id, type: 'accept' }));
     }
 
     //Reject Request
-    const rejectReq = () => {
+    const rejectReq = (id) => {
         console.log("Reject Request");
+        dispatch(VendorShopRequestAPI({ id: id, type: 'reject' }));
     }
 
+    console.log("viewInfo :-");
 
     return (
         <>
@@ -49,7 +69,7 @@ const VendorModal = ({ closeModal, viewInfo }) => {
                 </Modal.Header>
                 <Modal.Body>
                     <div>
-                        <h4 className="text-align-center mb-4">Hair & look</h4>
+                        <h4 className="text-align-center mb-4">{viewInfo?.vendorDetails[0]?.shop_name}</h4>
                     </div>
                     <Row >
                         <Col>
@@ -59,7 +79,15 @@ const VendorModal = ({ closeModal, viewInfo }) => {
                                         <span className="template-color">Shop Owner : </span>
                                     </td>
                                     <td>
-                                        <span>Bhargav Patel</span>
+                                        <span>{viewInfo?.userDetails[0]?.user_name}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span className="template-color">Personal Contact No : </span>
+                                    </td>
+                                    <td>
+                                        <span> {viewInfo?.userDetails[0]?.contact_number}</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -67,15 +95,15 @@ const VendorModal = ({ closeModal, viewInfo }) => {
                                         <span className="template-color">Shop Category : </span>
                                     </td>
                                     <td>
-                                        <span>Salon</span>
+                                        <span>{viewInfo?.categoryDeatils[0]?.name}</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span className="template-color">Contact No : </span>
+                                        <span className="template-color">Shop Contact No : </span>
                                     </td>
                                     <td>
-                                        <span> 7567652068</span>
+                                        <span> {viewInfo?.shop_contact_number}</span>
                                     </td>
                                 </tr>
                                 <tr>
@@ -83,7 +111,15 @@ const VendorModal = ({ closeModal, viewInfo }) => {
                                         <span className="template-color">Shop Category : </span>
                                     </td>
                                     <td>
-                                        <span>Atlanta Shopping Mall, Althan, VIP Road, surat</span>
+                                        <span>{viewInfo?.shop_door_number}, {viewInfo?.shop_area}, {viewInfo?.shop_city_town}, {viewInfo?.shop_state}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span className="template-color">Pincode : </span>
+                                    </td>
+                                    <td>
+                                        <span>{viewInfo?.shop_pincode}</span>
                                     </td>
                                 </tr>
                             </table>
@@ -91,13 +127,24 @@ const VendorModal = ({ closeModal, viewInfo }) => {
                     </Row>
                     <Row>
                         <Col className="justify-center mb-4 mt-3">
-                            <div className="mr-3" title="Accept">
-                                <Button variant="accept-button" style={{width : '110px'}} onClick={acceptReq} />
-                            </div>
-                            <div title="Reject">
-                                <Button variant="reject-button" style={{width : '110px'}} onClick={rejectReq} />
-                            </div>
+                            {
+                                type != 'vendorList' && (
+                                    <>
 
+                                        {
+                                            type != 'pendingRequest' && (
+                                                <div className="mr-3" title="Accept">
+                                                    <Button variant="accept-button" style={{ width: '70px' }} onClick={() => acceptReq(viewInfo?._id)} />
+                                                </div>
+                                            )
+                                        }
+
+                                        <div title="Reject">
+                                            <Button variant="reject-button" style={{ width: '70px' }} onClick={() => rejectReq(viewInfo?._id)} />
+                                        </div>
+                                    </>
+                                )
+                            }
                         </Col>
                     </Row>
                 </Modal.Body>

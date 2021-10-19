@@ -8,6 +8,8 @@ import { useSelector, useDispatch } from 'react-redux';
 
 const AddPlan = ({ editData, closeModal }) => {
 
+    console.log("editData- ", editData);
+
     //Objects
     const dispatch = useDispatch();
 
@@ -21,7 +23,12 @@ const AddPlan = ({ editData, closeModal }) => {
         id: '',
         name: '',
         price: '',
-        type: ''
+        type: '',
+        options: [
+            { value: '3month', label: '3 Months' },
+            { value: '6month', label: '6 Months' },
+            { value: '12month', label: '12 Months' },
+        ]
     })
 
     //Useeffect
@@ -31,12 +38,18 @@ const AddPlan = ({ editData, closeModal }) => {
         if (editData.type == 'edit') {
             setForm({
                 ...form,
-                name: editData?.data?.name,
-                price: '',
-                type: ''
+                name: editData?.data?.item?.name,
+                price: editData?.data?.item?.plan_price,
+                type: editData?.data?.item?.plan_type,
             })
         }
     }, [])
+
+    useEffect(() => {
+        if (isAddPlanStatus) {
+            handleClose();
+        }
+    }, [isAddPlanStatus])
 
     //Functions
 
@@ -67,7 +80,13 @@ const AddPlan = ({ editData, closeModal }) => {
         setIsLoading(true);
         if (form.name != '' && form.type != "" && form.price != '') {
             dispatch(AddPlanAPI(
-                { id: editData.type == 'edit' ? (editData.data._id) : '', type: editData.type, name: form.name, planType: form.type, price: form.price }
+                { 
+                id: editData.type == 'edit' ? (editData?.data?.item?._id) : '', 
+                name: form.name, 
+                planType: form.type, 
+                price: form.price,
+                status : editData.type == 'edit' ? editData?.data?.item?.status : true
+             }
             ));
         } else {
             dispatch(ErrorAlert('Please Enter Category !!'))
@@ -95,7 +114,8 @@ const AddPlan = ({ editData, closeModal }) => {
                                 <Input type="text" value={form.name} label="Plan Name" name="name" placeholder="Enter Plan Name" onChange={handleFormChange} required />
                             </div>
                             <div class="form-group col-md-12">
-                                <Input type="text" value={form.type} label="Plan Type" name="type" placeholder="Enter Plan Tyoe" onChange={handleFormChange} required />
+                                {/* <Input type="text" value={form.type} label="Plan Type" name="type" placeholder="Enter Plan Tyoe" onChange={handleFormChange} required /> */}
+                                <Select label='Plan Type' name="type" value={form.type} required onChange={handleFormChange} options={form.options} />
                             </div>
                             <div class="form-group col-md-12">
                                 <Input type="number" value={form.price} label="Plan Price" name="price" placeholder="Enter Plan Price" onChange={handleFormChange} required />

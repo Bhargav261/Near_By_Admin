@@ -75,7 +75,7 @@ const Add_Category = ({ editData, closeModal }) => {
         if (form.name != '') {
             console.log("call in if");
             dispatch(AddCategoryAPI(
-                { id: editData.type == 'edit' ? (editData.data._id) : '', type: editData.type, name: form.name }
+                { id: editData.type == 'edit' ? (editData.data._id) : '', type: editData.type, name: form.name, status : editData.type == 'edit' ? editData.data.status : true }
             ));
         } else {
             dispatch(ErrorAlert('Please Enter Category !!'))

@@ -1,25 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import VendorModal from './VendorModal';
+import { useSelector, useDispatch } from 'react-redux';
+import { VendorListAPI, vendorListStatus } from '../Redux/Listing/Listing';
+import { useParams } from 'react-router-dom';
 
 const VendorListing = ({ type }) => {
 
-    //Temp Data
-    const demo = [{
-        vname: 'ABC',
-        category: 'salon',
-        shopName: 'LookUp',
-        contactNumber: '756765208'
-    },
-    {
-        vname: 'DEF',
-        category: 'Ele',
-        shopName: 'Uma',
-        contactNumber: '2068765756'
-    }]
+    //Object
+    const dispatch = useDispatch();
+    const { name } = useParams();
+
+    //get data from store
+    const { isVendorListStatus, vendorList } = useSelector(state => state.category);
 
     //Manage State
     const [viewStatus, setViewStatus] = useState(false);
     const [viewInfo, setViewInfo] = useState('');
+    const [viewData, setViewData] = useState([]);
+    const [callAPI, setCallAPI] = useState(false);
+
+    //useeffect
+    useEffect(() => {
+        let status = ''
+        if (type == 'newRequest' || type == "today's") {
+            status = 'pending'
+        } else if (type == 'pendingRequest') {
+            status = 'paymentpending'
+        } else if (type == 'cancelRequest') {
+            status = 'reject'
+        } else if (type == 'vendorList') {
+            status = 'active'
+        }
+        dispatch(VendorListAPI({ type: status }))
+    }, [type, callAPI])
+
+    useEffect(() => {
+        if (vendorList?.length > 0) {
+            setViewData(vendorList);
+        }else{
+            setViewData([])
+        }
+    }, [vendorList])
 
     //Functions
 
@@ -33,6 +54,7 @@ const VendorListing = ({ type }) => {
     //Close Modal
     const closeModal = () => {
         setViewStatus(false);
+        setCallAPI(!callAPI);
         console.log("Close Modal");
     }
 
@@ -45,21 +67,23 @@ const VendorListing = ({ type }) => {
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">Vendor Name</th>
+                                <th scope="col">Personal Contact</th>
                                 <th scope="col">Category</th>
                                 <th scope="col">Shop Name</th>
-                                <th scope="col">Contact Number</th>
+                                <th scope="col">Pincode</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
                             {
-                                demo.length > 0 && demo.map((item, index) => (
+                                viewData?.length > 0 && viewData.map((item, index) => (
                                     <tr>
                                         <td class="f_s_14 f_w_400">{index + 1}</td>
-                                        <td class="f_s_14 f_w_400">{item.vname}</td>
-                                        <td class="f_s_14 f_w_400">{item.category}</td>
-                                        <td class="f_s_14 f_w_400">{item.shopName}</td>
-                                        <td class="f_s_14 f_w_400">{item.contactNumber}</td>
+                                        <td class="f_s_14 f_w_400">{item?.userDetails[0]?.user_name}</td>
+                                        <td class="f_s_14 f_w_400">{item?.userDetails[0]?.contact_number}</td>
+                                        <td class="f_s_14 f_w_400">{item?.categoryDeatils[0]?.name}</td>
+                                        <td class="f_s_14 f_w_400">{item?.vendorDetails[0]?.shop_name}</td>
+                                        <td class="f_s_14 f_w_400">{item?.shop_pincode}</td>
                                         <td class="f_s_14 f_w_400">
                                             {
                                                 type == 'cancelRequest' ?
@@ -82,7 +106,7 @@ const VendorListing = ({ type }) => {
 
             {
                 viewStatus && (
-                    <VendorModal closeModal={closeModal} viewInfo={viewInfo} />
+                    <VendorModal closeModal={closeModal} viewInfo={viewInfo} type={type} />
                 )
             }
         </>

@@ -36,6 +36,14 @@ const Left_Pannel = () => {
                     </NavLink>
                 </li>
                 <li class="">
+                    <NavLink class="has-arrow" to="/app/request/vendorList">
+                        <div class="icon_menu">
+                            <img src="/img/menu-icon/2.svg" alt="" />
+                        </div>
+                        <span>Vendors</span>
+                    </NavLink>
+                </li>
+                <li class="">
                     <NavLink class="has-arrow" to="/app/apps">
                         <div class="icon_menu">
                             <img src="/img/menu-icon/2.svg" alt="" />

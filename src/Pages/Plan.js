@@ -8,20 +8,6 @@ import { PlanListAPI, deletePlanAPI, deletePlanStatus, changeStatusPlanAPI, chan
 
 const Plan = () => {
 
-    //Temp Data
-    const planDetails = [
-        {
-            name: 'Gold',
-            price: '100$',
-            status: true
-        },
-        {
-            name: 'Silver',
-            price: '50$',
-            status: false
-        }
-    ]
-
     //Object
     const dispatch = useDispatch();
 
@@ -91,7 +77,7 @@ const Plan = () => {
 
     //Click on Delete
     const clickonDelete = (item) => {
-        editData.deleteID = "";
+        editData.deleteID = item?._id;
         handleShow();
     }
 
@@ -124,6 +110,7 @@ const Plan = () => {
             type: ''
         })
         setViewModalStatus(false);
+        setCallAPI(!callAPI);
     }
 
     return (
@@ -171,6 +158,7 @@ const Plan = () => {
                                                     <tr>
                                                         <th scope="col">Id</th>
                                                         <th scope="col">Plan Name</th>
+                                                        <th scope="col">Plan Type</th>
                                                         <th scope="col">Plan Price</th>
                                                         <th scope="col">Status</th>
                                                         <th scope="col">Action</th>
@@ -178,11 +166,12 @@ const Plan = () => {
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        planDetails && planDetails.length > 0 && planDetails && planDetails.map((item, index) => (
+                                                        viewPlan && viewPlan.length > 0 && viewPlan && viewPlan.map((item, index) => (
                                                             <tr>
                                                                 <th scope="row">{index + 1}</th>
                                                                 <td>{item.name}</td>
-                                                                <td>{item.price}</td>
+                                                                <td>{item.plan_type}</td>
+                                                                <td>₹ {item.plan_price}</td>
                                                                 <td>{item.status ? <div className="color-green cursor-pointer" onClick={() => changeStatus(item._id, item.status)}>Active</div> : <div className="color-red cursor-pointer" onClick={() => changeStatus(item._id, item.status)}>Inactive</div>}</td>
                                                                 <td class="flex">
                                                                     <div class="mr-2">

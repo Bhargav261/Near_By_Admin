@@ -36,7 +36,7 @@ export const AddCategoryAPI = createAsyncThunk('Add CategoryAPI Call', async ({ 
             {
                 id: id,
                 name: name,
-                status: true
+                status: status
             });
         const responseData = response.data;
 
@@ -135,8 +135,8 @@ export const AddPlanAPI = createAsyncThunk('Add Plan Call', async ({ id, name, p
                 id: id,
                 name: name,
                 price: price,
-                type : planType,
-                status: true
+                type: planType,
+                status: status
             });
 
         const responseData = response.data;
@@ -201,6 +201,53 @@ export const changeStatusPlanAPI = createAsyncThunk('Change Status Plan API Call
 });
 
 
+//Vendor Shop Request Data
+export const VendorListAPI = createAsyncThunk('Vendor Listing API Call', async ({ type }, { dispatch, rejectWithValue }) => {
+    try {
+
+        const response = await axios.post("admin/vendorList", {
+            type: type
+        });
+        const responseData = response.data;
+
+        if (responseData.status === "success") {
+            dispatch(SuccessAlert(responseData.msg));
+            return response;
+        } else {
+            dispatch(ErrorAlert(responseData.msg));
+            return rejectWithValue({ message: 'No Data Found' });
+        }
+    }
+    catch (e) {
+        dispatch(ErrorAlert('Something Want Wrong!!'));
+    }
+});
+
+//Accept Reject Request Vendor Shop Data
+export const VendorShopRequestAPI = createAsyncThunk('Accept Request API Shop Call', async ({ id, type }, { dispatch, rejectWithValue }) => {
+    try {
+
+        const response = await axios.post("admin/acceptRejectRequest",
+            {
+                id: id,
+                type: type
+            });
+
+        const responseData = response.data;
+
+        if (responseData.status === "success") {
+            dispatch(SuccessAlert(responseData.msg));
+            return response;
+        } else {
+            dispatch(ErrorAlert(responseData.msg));
+            return rejectWithValue({ message: 'No Data Found' });
+        }
+    }
+    catch (e) {
+        dispatch(ErrorAlert('Something Want Wrong!!'));
+    }
+});
+
 export const slice = createSlice({
     name: 'Listing Slice',
     initialState: {
@@ -214,7 +261,11 @@ export const slice = createSlice({
         planResource: [],
         isAddPlanStatus: false,
         isDeletePlan: false,
-        isChangePlanStatusAPI: false
+        isChangePlanStatusAPI: false,
+
+        isVendorListStatus: false,
+        vendorList: [],
+        isVendorShopRequest: false
     },
     reducers: {
         categoryStatus: (state, action) => {
@@ -242,6 +293,13 @@ export const slice = createSlice({
         changePlanStatusData: (state, action) => {
             state.isChangePlanStatusAPI = action.payload;
         },
+
+        vendorListStatus: (state, action) => {
+            state.isVendorListStatus = action.payload;
+        },
+        vendorShopRequestStatus: (state, action) => {
+            state.isVendorShopRequest = action.payload;
+        }
     },
     extraReducers: {
         [CategoryListAPI.fulfilled]: (state, action) => {
@@ -274,8 +332,8 @@ export const slice = createSlice({
 
         [PlanListAPI.fulfilled]: (state, action) => {
             state.isPlanStatus = true;
-            // state.planResource = action.payload.data.payload.data.data;
-            state.planResource = [];
+            state.planResource = action.payload.data.payload.data.data;
+            // state.planResource = [];
         },
         [PlanListAPI.rejected]: (state, action) => {
             state.isPlanStatus = false;
@@ -298,12 +356,31 @@ export const slice = createSlice({
         },
         [changeStatusPlanAPI.rejected]: (state, action) => {
             state.isChangePlanStatusAPI = false;
+        },
+
+        [VendorListAPI.fulfilled]: (state, action) => {
+            state.isVendorListStatus = true;
+            state.vendorList = action.payload.data.payload.data.data;
+            // state.vendorList = [];
+        },
+        [VendorListAPI.rejected]: (state, action) => {
+            state.isVendorListStatus = false;
+            state.vendorList = [];
+        },
+        [VendorShopRequestAPI.fulfilled]: (state, action) => {
+            state.isVendorShopRequest = true;
+        },
+        [VendorShopRequestAPI.rejected]: (state, action) => {
+            state.isVendorShopRequest = false;
         }
+
+
     }
 });
 
 export const { categoryStatus, addCategoryStatus, deleteCategoryStatus, changeStatusData,
-    planStatus, addPlanStatus, deletePlanStatus, changePlanStatusData
+    planStatus, addPlanStatus, deletePlanStatus, changePlanStatusData,
+    vendorListStatus, vendorShopRequestStatus
 } = slice.actions;
 
 export default slice.reducer;

@@ -1,6 +1,6 @@
 import React from 'react';
-import VendorListing from './Vendor_Listing'
-import {useParams} from 'react-router-dom'
+import VendorListing from './Vendor_Listing';
+import {useParams} from 'react-router-dom';
 
 const ViewRequest = () => {
 
@@ -19,6 +19,7 @@ const ViewRequest = () => {
                                         {name == 'newRequest' && 'New Request'}
                                         {name == 'pendingRequest' && 'Pending Request'}
                                         {name == 'cancelRequest' && 'Cancel Request'}
+                                        {name == 'vendorList' && 'Vendor List'}
                                     </h3>
                                 </div>
                             </div>
