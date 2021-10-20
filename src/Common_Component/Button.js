@@ -54,7 +54,7 @@ const Button = ({ variant, label, onClick, isLoading, ...rest }) => {
             {
                 variant == 'fa-edit' && (
                     <div onClick={onClick} {...rest}>
-                        <i className="fas fa-edit cursor-pointer" style={{ fontSize: '11px' }}></i>
+                        <i className="fas fa-edit cursor-pointer" style={{ fontSize: '11px', color: '#00918e' }}></i>
                     </div>
                 )
             }
@@ -62,7 +62,7 @@ const Button = ({ variant, label, onClick, isLoading, ...rest }) => {
             {
                 variant == 'fa-trash' && (
                     <div onClick={onClick} {...rest}>
-                        <i className="ti-trash cursor-pointer" style={{ fontSize: '11px' }}></i>
+                        <i className="fa fa-trash cursor-pointer" style={{ fontSize: '11px', color: '#00918e' }}></i>
                     </div>
                 )
             }

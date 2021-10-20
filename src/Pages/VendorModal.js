@@ -76,50 +76,50 @@ const VendorModal = ({ closeModal, viewInfo, type }) => {
                             <table class="table table-clear QA_table">
                                 <tr>
                                     <td>
-                                        <span className="template-color">Shop Owner : </span>
+                                        <span className="template-color">Shop Owner</span>
                                     </td>
                                     <td>
-                                        <span>{viewInfo?.userDetails[0]?.user_name}</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span className="template-color">Personal Contact No : </span>
-                                    </td>
-                                    <td>
-                                        <span> {viewInfo?.userDetails[0]?.contact_number}</span>
+                                        <span>: {viewInfo?.userDetails[0]?.user_name}</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span className="template-color">Shop Category : </span>
+                                        <span className="template-color">Personal Contact No</span>
                                     </td>
                                     <td>
-                                        <span>{viewInfo?.categoryDeatils[0]?.name}</span>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <span className="template-color">Shop Contact No : </span>
-                                    </td>
-                                    <td>
-                                        <span> {viewInfo?.shop_contact_number}</span>
+                                        <span>: {viewInfo?.userDetails[0]?.contact_number}</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span className="template-color">Shop Category : </span>
+                                        <span className="template-color">Shop Category</span>
                                     </td>
                                     <td>
-                                        <span>{viewInfo?.shop_door_number}, {viewInfo?.shop_area}, {viewInfo?.shop_city_town}, {viewInfo?.shop_state}</span>
+                                        <span>: {viewInfo?.categoryDeatils[0]?.name}</span>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>
-                                        <span className="template-color">Pincode : </span>
+                                        <span className="template-color">Shop Contact No</span>
                                     </td>
                                     <td>
-                                        <span>{viewInfo?.shop_pincode}</span>
+                                        <span>: {viewInfo?.shop_contact_number}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span className="template-color">Shop Category</span>
+                                    </td>
+                                    <td>
+                                        <span>: {viewInfo?.shop_door_number}, {viewInfo?.shop_area}, {viewInfo?.shop_city_town}, {viewInfo?.shop_state}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <span className="template-color">Pincode</span>
+                                    </td>
+                                    <td>
+                                        <span>: {viewInfo?.shop_pincode}</span>
                                     </td>
                                 </tr>
                             </table>

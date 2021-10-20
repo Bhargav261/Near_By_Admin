@@ -363,3 +363,10 @@ code {
   display: flex;
   justify-content: center;
 }
+
+
+.noDataFound{
+  text-align: center;
+  font-weight: 500;
+  color: #00918e;
+}

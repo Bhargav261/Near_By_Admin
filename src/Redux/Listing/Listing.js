@@ -3,13 +3,15 @@ import { ErrorAlert, SuccessAlert } from '../SanckBar/SnackbarSlice';
 import axios from 'axios';
 
 //View Category
-export const CategoryListAPI = createAsyncThunk('Category Listing API Call', async ({ data }, { dispatch, rejectWithValue }) => {
-    console.log("Call API :- ", data);
+export const CategoryListAPI = createAsyncThunk('Category Listing API Call', async ({ search }, { dispatch, rejectWithValue }) => {
+    console.log("Call API :- ", search);
     try {
 
         console.log("Call Category API CALL");
 
-        const response = await axios.post("admin/category");
+        const response = await axios.post("admin/category",{
+            search : search
+        });
         const responseData = response.data;
 
         console.log("responseData :- ", responseData);
@@ -107,10 +109,12 @@ export const changeStatusAPI = createAsyncThunk('Change SttausAPI Call', async (
 
 
 //View Plan
-export const PlanListAPI = createAsyncThunk('Plan Listing API Call', async ({ data }, { dispatch, rejectWithValue }) => {
+export const PlanListAPI = createAsyncThunk('Plan Listing API Call', async ({ search }, { dispatch, rejectWithValue }) => {
     try {
 
-        const response = await axios.post("admin/plan");
+        const response = await axios.post("admin/plan",{
+            search : search
+        });
         const responseData = response.data;
 
         if (responseData.status === "success") {
@@ -202,11 +206,14 @@ export const changeStatusPlanAPI = createAsyncThunk('Change Status Plan API Call
 
 
 //Vendor Shop Request Data
-export const VendorListAPI = createAsyncThunk('Vendor Listing API Call', async ({ type }, { dispatch, rejectWithValue }) => {
+export const VendorListAPI = createAsyncThunk('Vendor Listing API Call', async ({ type, search }, { dispatch, rejectWithValue }) => {
+
+    console.log("Vendor List API :- ", search, type);
     try {
 
         const response = await axios.post("admin/vendorList", {
-            type: type
+            type: type,
+            search : search
         });
         const responseData = response.data;
 

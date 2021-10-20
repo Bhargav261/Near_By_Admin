@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import Button from '../Common_Component/Button';
 import Search from '../Common_Component/Search';
 import { Modal } from 'react-bootstrap';
 import AddPlan from './Add_Plan';
+import { debounce } from "lodash";
 import { useSelector, useDispatch } from 'react-redux';
+import NoDataFound from '../Common_Component/NoDataFound';
 import { PlanListAPI, deletePlanAPI, deletePlanStatus, changeStatusPlanAPI, changePlanStatusData } from '../Redux/Listing/Listing';
 
 const Plan = () => {
@@ -26,8 +28,8 @@ const Plan = () => {
         type: ''
     });
 
-     //useeffect
-     useEffect(() => {
+    //useeffect
+    useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         dispatch(deletePlanStatus(false));
     }, [])
@@ -41,25 +43,30 @@ const Plan = () => {
     }, [planResource])
 
     useEffect(() => {
-        if(isDeletePlan){
+        if (isDeletePlan) {
             setCallAPI(!callAPI);
             handleClose();
             dispatch(deletePlanStatus(false));
         }
-    },[isDeletePlan])
+    }, [isDeletePlan])
 
     useEffect(() => {
-        if(isChangePlanStatusAPI){
+        if (isChangePlanStatusAPI) {
             setCallAPI(!callAPI);
             dispatch(changePlanStatusData(false));
         }
-    },[isChangePlanStatusAPI])
+    }, [isChangePlanStatusAPI])
+
+    useEffect(() => {
+        debounceSearch(search);
+    }, [search])
 
     //Functions
 
-    //Handlee Chnage
-    const handleChange = () => {
-        console.log("handle change :- ");
+    //onChnage Handler
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setSearch(value);
     }
 
     //click on Add
@@ -83,7 +90,7 @@ const Plan = () => {
 
     //Click On Change Status
     const changeStatus = (id, status) => {
-        dispatch(changeStatusPlanAPI({id : id, status : !status}))
+        dispatch(changeStatusPlanAPI({ id: id, status: !status }))
         console.log("clickon Change Status :- ");
     }
 
@@ -113,6 +120,12 @@ const Plan = () => {
         setCallAPI(!callAPI);
     }
 
+    //Debounce Search
+    const debounceSearch = useCallback(
+        debounce((searchData) => {
+            dispatch(PlanListAPI({ search: searchData }));
+        }, 500), []
+    );
     return (
         <>
             {/* Delete Modal */}
@@ -166,23 +179,31 @@ const Plan = () => {
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        viewPlan && viewPlan.length > 0 && viewPlan && viewPlan.map((item, index) => (
+                                                        viewPlan?.length > 0 ?
+                                                            viewPlan?.length > 0 && viewPlan && viewPlan.map((item, index) => (
+                                                                <tr>
+                                                                    <th scope="row">{index + 1}</th>
+                                                                    <td>{item.name}</td>
+                                                                    <td>{item.plan_type}</td>
+                                                                    <td>₹ {item.plan_price}</td>
+                                                                    <td>{item.status ? <div className="color-green cursor-pointer" onClick={() => changeStatus(item._id, item.status)}>Active</div> : <div className="color-red cursor-pointer" onClick={() => changeStatus(item._id, item.status)}>Inactive</div>}</td>
+                                                                    <td class="flex">
+                                                                        <div class="mr-2">
+                                                                            <Button variant='fa-edit' onClick={() => clickonEdit(item)} />
+                                                                        </div>
+                                                                        <div>
+                                                                            <Button variant='fa-trash' onClick={() => clickonDelete(item)} />
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            ))
+                                                            :
                                                             <tr>
-                                                                <th scope="row">{index + 1}</th>
-                                                                <td>{item.name}</td>
-                                                                <td>{item.plan_type}</td>
-                                                                <td>₹ {item.plan_price}</td>
-                                                                <td>{item.status ? <div className="color-green cursor-pointer" onClick={() => changeStatus(item._id, item.status)}>Active</div> : <div className="color-red cursor-pointer" onClick={() => changeStatus(item._id, item.status)}>Inactive</div>}</td>
-                                                                <td class="flex">
-                                                                    <div class="mr-2">
-                                                                        <Button variant='fa-edit' onClick={() => clickonEdit(item)} />
-                                                                    </div>
-                                                                    <div>
-                                                                        <Button variant='fa-trash' onClick={() => clickonDelete(item)} />
-                                                                    </div>
+                                                                <td colSpan={10}>
+                                                                    <NoDataFound msg={"Plan Not Found!!"} />
                                                                 </td>
                                                             </tr>
-                                                        ))
+
                                                     }
                                                 </tbody>
                                             </table>

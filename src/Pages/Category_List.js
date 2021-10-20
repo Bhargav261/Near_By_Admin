@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Button from '../Common_Component/Button';
 import Search from '../Common_Component/Search';
 import { Modal } from 'react-bootstrap'
 import Add_Category from './Add_Category';
 import { useSelector, useDispatch } from 'react-redux';
+import { debounce } from "lodash";
+import NoDataFound from '../Common_Component/NoDataFound';
 import { CategoryListAPI, deleteCategoryAPI, deleteCategoryStatus, changeStatusAPI, changeStatusData } from '../Redux/Listing/Listing';
 
 const Category_List = () => {
@@ -35,7 +37,7 @@ const Category_List = () => {
     }, [])
 
     useEffect(() => {
-        dispatch(CategoryListAPI({ data: 'ABC' }));
+        dispatch(CategoryListAPI({ search: '' }));
     }, [callAPI])
 
     useEffect(() => {
@@ -43,19 +45,23 @@ const Category_List = () => {
     }, [categoryResource])
 
     useEffect(() => {
-        if(isDeleteCategory){
+        if (isDeleteCategory) {
             setCallAPI(!callAPI);
             handleClose();
             dispatch(deleteCategoryStatus(false));
         }
-    },[isDeleteCategory])
+    }, [isDeleteCategory])
 
     useEffect(() => {
-        if(isChangeStatusAPI){
+        if (isChangeStatusAPI) {
             setCallAPI(!callAPI);
             dispatch(changeStatusData(false));
         }
-    },[isChangeStatusAPI])
+    }, [isChangeStatusAPI])
+
+    useEffect(() => {
+        debounceSearch(search);
+    }, [search])
 
     //Functions
 
@@ -115,8 +121,15 @@ const Category_List = () => {
     //Click on Chnage Status
     const changeStatus = (id, status) => {
         console.log("Change Status :- ");
-        dispatch(changeStatusAPI({id : id, status : !status}))
+        dispatch(changeStatusAPI({ id: id, status: !status }))
     }
+
+    //Debounce Search
+    const debounceSearch = useCallback(
+        debounce((searchData) => {
+            dispatch(CategoryListAPI({ search: searchData }));
+        }, 500), []
+    );
 
     return (
         <>
@@ -171,22 +184,28 @@ const Category_List = () => {
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        categoryView.length > 0 && categoryView.map((item, index) => (
+                                                        categoryView.length > 0 ?
+                                                            categoryView.length > 0 && categoryView.map((item, index) => (
+                                                                <tr>
+                                                                    <th scope="row">{index + 1}</th>
+                                                                    <td><img src="/img/banner.png" style={{ height: '30px', width: '80px' }} /></td>
+                                                                    <td>{item.name}</td>
+                                                                    <td>{item.status ? <div className="color-green cursor-pointer" onClick={() => changeStatus(item._id, item.status)}>Active</div> : <div className="color-red cursor-pointer" onClick={() => changeStatus(item._id, item.status)}>Inactive</div>}</td>
+                                                                    <td class="flex">
+                                                                        <div class="mr-2">
+                                                                            <Button variant='fa-edit' onClick={() => clickonEdit(item)} />
+                                                                        </div>
+                                                                        <div>
+                                                                            <Button variant='fa-trash' onClick={() => clickonDelete(item)} />
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            )) :
                                                             <tr>
-                                                                <th scope="row">{index + 1}</th>
-                                                                <td><img src="/img/banner.png" style={{ height: '30px', width: '80px' }} /></td>
-                                                                <td>{item.name}</td>
-                                                                <td>{item.status ? <div className="color-green cursor-pointer" onClick={() => changeStatus(item._id, item.status)}>Active</div> : <div className="color-red cursor-pointer" onClick={() => changeStatus(item._id, item.status)}>Inactive</div>}</td>
-                                                                <td class="flex">
-                                                                    <div class="mr-2">
-                                                                        <Button variant='fa-edit' onClick={() => clickonEdit(item)} />
-                                                                    </div>
-                                                                    <div>
-                                                                        <Button variant='fa-trash' onClick={() => clickonDelete(item)} />
-                                                                    </div>
+                                                                <td colSpan={10}>
+                                                                    <NoDataFound msg={"Category Not Found!!"}/>
                                                                 </td>
                                                             </tr>
-                                                        ))
                                                     }
                                                 </tbody>
                                             </table>
