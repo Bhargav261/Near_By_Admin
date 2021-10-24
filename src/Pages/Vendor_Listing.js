@@ -22,6 +22,7 @@ const VendorListing = ({ type }) => {
     const [viewInfo, setViewInfo] = useState('');
     const [viewData, setViewData] = useState([]);
     const [callAPI, setCallAPI] = useState(false);
+    const [showViewType, setShowViewType] = useState('');
 
     //useeffect
     useEffect(() => {
@@ -58,8 +59,9 @@ const VendorListing = ({ type }) => {
     }
 
     //Click on View Details
-    const clickOnView = (data) => {
+    const clickOnView = (data, type) => {
         console.log("Click on View");
+        setShowViewType(type);
         setViewInfo(data);
         setViewStatus(true);
     }
@@ -146,8 +148,13 @@ const VendorListing = ({ type }) => {
                                                                         <span className="color-red">Reject</span>
                                                                     </div>
                                                                     :
-                                                                    <div className="cursor-pointer" onClick={() => clickOnView(item)} title='View More Details'>
-                                                                        <i className="fa fa-eye template-color"></i>
+                                                                    <div className="flex">
+                                                                        <div className="cursor-pointer" onClick={() => clickOnView(item, 'info')} title='View Shop Details' style={{ marginRight: '10px' }}>
+                                                                            <i className="fa fa-eye template-color"></i>
+                                                                        </div>
+                                                                        <div className="cursor-pointer" onClick={() => clickOnView(item, 'service')} title='View Shop Service'>
+                                                                            <i class="fa fa-align-justify template-color"></i>
+                                                                        </div>
                                                                     </div>
                                                             }
                                                         </td>
@@ -164,7 +171,6 @@ const VendorListing = ({ type }) => {
                                 </table>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -172,7 +178,7 @@ const VendorListing = ({ type }) => {
 
             {
                 viewStatus && (
-                    <VendorModal closeModal={closeModal} viewInfo={viewInfo} type={type} />
+                    <VendorModal showViewType={showViewType} closeModal={closeModal} viewInfo={viewInfo} type={type} />
                 )
             }
         </>

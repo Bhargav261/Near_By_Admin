@@ -370,3 +370,28 @@ code {
   font-weight: 500;
   color: #00918e;
 }
+
+.card_box .box_body .card .card-header{
+  background-color: #ecf3f3  !important;
+    padding: 50px;
+    /* border-bottom: 1px solid #00918e !important; */
+    border-top-left-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    padding: 0.75rem 1.25rem;
+}
+
+.card_box .box_body .card .card-body{
+  border: 1px solid #00918e;
+  border-top: 0;
+}
+
+.card_box .box_body .card .card-header h5 button{
+  color: #00918e;
+}
+
+.card_box .box_body{
+  padding: 15px !important;
+}
