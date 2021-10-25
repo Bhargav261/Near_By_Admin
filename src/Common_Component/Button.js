@@ -67,6 +67,15 @@ const Button = ({ variant, label, onClick, isLoading, ...rest }) => {
                 )
             }
 
+            {
+                variant == 'fa-left-arrow' && (
+                    <div onClick={onClick} {...rest}>
+                        <i className="fa fa-arrow-left cursor-pointer" title="Back" style={{ fontSize: '16px', color: '#fff' }}></i>
+                    </div>
+                )
+            }
+
+
         </>
     )
 }

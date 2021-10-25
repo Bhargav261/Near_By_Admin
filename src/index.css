@@ -395,3 +395,8 @@ code {
 .card_box .box_body{
   padding: 15px !important;
 }
+
+.backButton{
+    margin-right: 10px;
+    margin-top: 3px;
+}

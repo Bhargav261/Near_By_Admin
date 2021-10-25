@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Button from '../Common_Component/Button';
+import Input from '../Common_Component/Input';
 import { Modal, Row, Col } from 'react-bootstrap';
 import { vendorShopRequestStatus, VendorShopRequestAPI } from '../Redux/Listing/Listing';
 import { useSelector, useDispatch } from 'react-redux';
@@ -18,6 +19,8 @@ const VendorModal = ({ showViewType, closeModal, viewInfo, type }) => {
     //State Manage
     const [isLoading, setIsLoading] = useState(false);
     const [show, setShow] = useState(false);
+    const [reason, setReason] = useState('');
+    const [showRejectModal, setShowRejectModal] = useState(false);
 
     //Useeffect
     useEffect(() => {
@@ -54,18 +57,63 @@ const VendorModal = ({ showViewType, closeModal, viewInfo, type }) => {
     //Reject Request
     const rejectReq = (id) => {
         console.log("Reject Request");
-        dispatch(VendorShopRequestAPI({ id: id, type: 'reject' }));
+        // dispatch(VendorShopRequestAPI({ id: id, type: 'reject' }));
+        handleShowRejectModal();
+    }
+
+    //Close Reject Modal
+    const handleCloseRejectModal = () => {
+        setShowRejectModal(false);
+    }
+
+    //Show Reject Modal
+    const handleShowRejectModal = () => {
+        setShowRejectModal(true)
+    }
+
+    //Hanlde Change Event For Reason
+    const handleFormChange = (e) => {
+        const { name, value } = e.target
+        setReason(value);
+    }
+
+    //Form Submit Event
+    const formSubmit = (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+        console.log("Reason :- ", reason);
+        dispatch(VendorShopRequestAPI({ id: viewInfo?._id, type: 'reject', reason : reason }));
+        setIsLoading(false);
+        handleCloseRejectModal();
+        handleClose();
     }
 
     console.log("viewInfo :-");
 
     return (
         <>
-            <Modal show={show} onHide={handleClose}
+            <Modal show={showRejectModal} onHide={handleCloseRejectModal}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Enter Reason For Reject</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <form onSubmit={formSubmit} method="post" autoComplete="Off">
+                        <div>
+                            <Input type="textarea" value={reason} rows={5} label="Reason For Reject" name="reason" placeholder="Enter Reason" onChange={handleFormChange} required />
+                        </div>
+                        <Modal.Footer>
+                            <Button variant="button" isLoading={isLoading} label="Send" />
+                        </Modal.Footer>
+                    </form>
+                </Modal.Body>
+
+            </Modal>
+
+            <Modal show={show} onHide={handleClose} style={{ zIndex: showRejectModal ? 1039 : 1050 }}
             // size="lg"
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>{showViewType && showViewType == 'service' ? 'View Shop Service' :'View Shop Details'}</Modal.Title>
+                    <Modal.Title>{showViewType && showViewType == 'service' ? 'View Shop Service' : 'View Shop Details'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div>

@@ -14,7 +14,8 @@ const Left_Pannel = () => {
                 <li class="mm-active">
                     <NavLink class="has-arrow" to="/app/dashboard">
                         <div class="icon_menu">
-                            <img src="/img/menu-icon/dashboard.svg" alt="" />
+                        <div class="col-sm-6 col-md-4 col-xl-3"><i class="fas fa-home" style={{ color: '#00918e', fontSize : '13px' }}></i></div>
+                            {/* <img src="/img/menu-icon/dashboard.svg" alt="" /> */}
                         </div>
                         <span>Dashboard</span>
                     </NavLink>
@@ -22,7 +23,8 @@ const Left_Pannel = () => {
                 <li class="">
                     <NavLink class="has-arrow" to="/app/category">
                         <div class="icon_menu">
-                            <img src="/img/menu-icon/2.svg" alt="" />
+                            {/* <img src="/img/menu-icon/2.svg" alt="" /> */}
+                            <div class="col-sm-6 col-md-4 col-xl-3"><i class="fab fa-codiepie" style={{ color: '#00918e', fontSize : '13px' }}></i></div>
                         </div>
                         <span>Category</span>
                     </NavLink>
@@ -30,7 +32,8 @@ const Left_Pannel = () => {
                 <li class="">
                     <NavLink class="has-arrow" to="/app/plan">
                         <div class="icon_menu">
-                            <img src="/img/menu-icon/2.svg" alt="" />
+                            <div class="col-sm-6 col-md-4 col-xl-3"><i class="fas fa-money-bill-wave" style={{ color: '#00918e', fontSize : '13px' }}></i></div>
+                            {/* <img src="/img/menu-icon/2.svg" alt="" /> */}
                         </div>
                         <span>Plan</span>
                     </NavLink>
@@ -38,12 +41,13 @@ const Left_Pannel = () => {
                 <li class="">
                     <NavLink class="has-arrow" to="/app/request/vendorList">
                         <div class="icon_menu">
-                            <img src="/img/menu-icon/2.svg" alt="" />
+                            <div class="col-sm-6 col-md-4 col-xl-3"><i class="ti-pulse" style={{ color: '#00918e', fontSize : '13px' }}></i></div>
+                            {/* <img src="/img/menu-icon/2.svg" alt="" /> */}
                         </div>
                         <span>Vendors</span>
                     </NavLink>
                 </li>
-                <li class="">
+                {/* <li class="">
                     <NavLink class="has-arrow" to="/app/apps">
                         <div class="icon_menu">
                             <img src="/img/menu-icon/2.svg" alt="" />
@@ -58,7 +62,7 @@ const Left_Pannel = () => {
                         </div>
                         <span>Tables</span>
                     </NavLink>
-                </li>
+                </li> */}
             </ul>
         </nav>
     )

@@ -3,14 +3,16 @@ import VendorModal from './VendorModal';
 import Search from '../Common_Component/Search';
 import { useSelector, useDispatch } from 'react-redux';
 import { debounce } from "lodash";
+import Button from '../Common_Component/Button';
 import { VendorListAPI, vendorListStatus } from '../Redux/Listing/Listing';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import NoDataFound from '../Common_Component/NoDataFound';
 
 const VendorListing = ({ type }) => {
 
     //Object
     const dispatch = useDispatch();
+    const history = useHistory();
     const { name } = useParams();
 
     //get data from store
@@ -92,7 +94,13 @@ const VendorListing = ({ type }) => {
                     <div class="row">
                         <div class="col-12">
                             <div class="page_title_box d-flex align-items-center justify-content-between">
-                                <div class="page_title_left">
+                                <div class="page_title_left justify-space-between">
+                                    {
+                                        type != 'vendorList' && (
+                                            <div className="backButton">
+                                                <Button variant='fa-left-arrow' onClick={() => history.push('/app/dashboard')} />
+                                            </div>
+                                        )}
                                     <h3 class="f_s_30 f_w_700 text_white" >
                                         {name == 'newRequest' && 'New Request'}
                                         {name == 'pendingRequest' && 'Pending Request'}
@@ -152,9 +160,13 @@ const VendorListing = ({ type }) => {
                                                                         <div className="cursor-pointer" onClick={() => clickOnView(item, 'info')} title='View Shop Details' style={{ marginRight: '10px' }}>
                                                                             <i className="fa fa-eye template-color"></i>
                                                                         </div>
-                                                                        <div className="cursor-pointer" onClick={() => clickOnView(item, 'service')} title='View Shop Service'>
-                                                                            <i class="fa fa-align-justify template-color"></i>
-                                                                        </div>
+                                                                        {
+                                                                            type == 'vendorList' && (
+                                                                                <div className="cursor-pointer" onClick={() => clickOnView(item, 'service')} title='View Shop Service'>
+                                                                                    <i class="fa fa-align-justify template-color"></i>
+                                                                                </div>
+                                                                            )
+                                                                        }
                                                                     </div>
                                                             }
                                                         </td>
