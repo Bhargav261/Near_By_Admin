@@ -17,10 +17,10 @@ export const CategoryListAPI = createAsyncThunk('Category Listing API Call', asy
         console.log("responseData :- ", responseData);
 
         if (responseData.status === "success") {
-            dispatch(SuccessAlert(responseData.msg));
+            // dispatch(SuccessAlert(responseData.msg));
             return response;
         } else {
-            dispatch(ErrorAlert(responseData.msg));
+            // dispatch(ErrorAlert(responseData.msg));
             return rejectWithValue({ message: 'No Data Found' });
         }
     }
@@ -118,10 +118,10 @@ export const PlanListAPI = createAsyncThunk('Plan Listing API Call', async ({ se
         const responseData = response.data;
 
         if (responseData.status === "success") {
-            dispatch(SuccessAlert(responseData.msg));
+            // dispatch(SuccessAlert(responseData.msg));
             return response;
         } else {
-            dispatch(ErrorAlert(responseData.msg));
+            // dispatch(ErrorAlert(responseData.msg));
             return rejectWithValue({ message: 'No Data Found' });
         }
     }
@@ -206,22 +206,23 @@ export const changeStatusPlanAPI = createAsyncThunk('Change Status Plan API Call
 
 
 //Vendor Shop Request Data
-export const VendorListAPI = createAsyncThunk('Vendor Listing API Call', async ({ type, search }, { dispatch, rejectWithValue }) => {
+export const VendorListAPI = createAsyncThunk('Vendor Listing API Call', async ({ type, search, todays }, { dispatch, rejectWithValue }) => {
 
     console.log("Vendor List API :- ", search, type);
     try {
 
         const response = await axios.post("admin/vendorList", {
             type: type,
-            search : search
+            search : search,
+            todays:todays
         });
         const responseData = response.data;
 
         if (responseData.status === "success") {
-            dispatch(SuccessAlert(responseData.msg));
+            // dispatch(SuccessAlert(responseData.msg));
             return response;
         } else {
-            dispatch(ErrorAlert(responseData.msg));
+            // dispatch(ErrorAlert(responseData.msg));
             return rejectWithValue({ message: 'No Data Found' });
         }
     }

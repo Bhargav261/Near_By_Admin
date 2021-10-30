@@ -82,7 +82,7 @@ const VendorModal = ({ showViewType, closeModal, viewInfo, type }) => {
         e.preventDefault();
         setIsLoading(true);
         console.log("Reason :- ", reason);
-        dispatch(VendorShopRequestAPI({ id: viewInfo?._id, type: 'reject', reason : reason }));
+        dispatch(VendorShopRequestAPI({ id: viewInfo?._id, type: 'reject', reason: reason }));
         setIsLoading(false);
         handleCloseRejectModal();
         handleClose();
@@ -126,36 +126,22 @@ const VendorModal = ({ showViewType, closeModal, viewInfo, type }) => {
                                     <div class="card_box position-relative mb_30">
                                         <div class="box_body">
                                             <div class="default-according" id="accordion">
-                                                <div class="card">
-                                                    <div class="card-header" id="headingOne">
-                                                        <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Collapsible Group Item #<span class="digits">1</span></button>
-                                                        </h5>
-                                                    </div>
-                                                    <div class="collapse" id="collapseOne" aria-labelledby="headingOne" data-parent="#accordion">
-                                                        <div class="card-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.</div>
-                                                    </div>
-                                                </div>
-                                                <div class="card">
-                                                    <div class="card-header" id="headingTwo">
-                                                        <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Collapsible Group Item #<span class="digits">2</span></button>
-                                                        </h5>
-                                                    </div>
-                                                    <div class="collapse" id="collapseTwo" aria-labelledby="headingTwo" data-parent="#accordion">
-                                                        <div class="card-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.</div>
-                                                    </div>
-                                                </div>
-                                                <div class="card">
-                                                    <div class="card-header" id="headingThree">
-                                                        <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Collapsible Group Item #<span class="digits">3</span></button>
-                                                        </h5>
-                                                    </div>
-                                                    <div class="collapse" id="collapseThree" aria-labelledby="headingThree" data-parent="#accordion">
-                                                        <div class="card-body">Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.</div>
-                                                    </div>
-                                                </div>
+                                                {
+                                                    viewInfo?.serviceDetails?.length > 0 && viewInfo?.serviceDetails?.map((item, index) => (
+                                                        <div class="card">
+                                                            <div class="card-header" id="headingOne" style={{padding : '2px'}}>
+                                                                <h5 class="mb-0">
+                                                                    <button class="btn btn-link collapsed" data-toggle="collapse" data-target={`#collapseOne${index}`} aria-expanded="false" aria-controls="collapseOne">{item?.name}</button>
+                                                                </h5>
+                                                            </div>
+                                                            <div class="collapse" id={`collapseOne${index}`} aria-labelledby="headingOne" data-parent="#accordion">
+                                                                <div class="card-body" style={{padding : 15}}>
+                                                                    {item?.service_description}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    ))
+                                                }
                                             </div>
                                         </div>
                                     </div>

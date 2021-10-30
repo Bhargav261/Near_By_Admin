@@ -57,7 +57,7 @@ const VendorListing = ({ type }) => {
         } else if (type == 'vendorList') {
             status = 'active'
         }
-        dispatch(VendorListAPI({ type: status, search: search }))
+        dispatch(VendorListAPI({ type: status, search: search, todays: type == "today's"?true:false }))
     }
 
     //Click on View Details
@@ -96,7 +96,7 @@ const VendorListing = ({ type }) => {
                             <div class="page_title_box d-flex align-items-center justify-content-between">
                                 <div class="page_title_left justify-space-between">
                                     {
-                                        type != 'vendorList' && (
+                                        type !== 'vendorList' && (
                                             <div className="backButton">
                                                 <Button variant='fa-left-arrow' onClick={() => history.push('/app/dashboard')} />
                                             </div>

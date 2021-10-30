@@ -52,8 +52,8 @@ const Dashboard = props => {
                                         </div> */}
                                         </div>
                                     </div>
-                                    <div class="white_card_body d-flex align-items-center" style={{ height: '140px' }}  >
-                                        <h4 class="f_w_900 f_s_60 mb-0 mr-2" style={{ fontSize: '34px' }} >356</h4>
+                                    <div class="white_card_body d-flex align-items-center" style={{ height: '100px' }}  >
+                                        {/* <h4 class="f_w_900 f_s_60 mb-0 mr-2" style={{ fontSize: '34px' }} ></h4> */}
                                         <div class="w-100" style={{ height: '100px' }} >
                                             <canvas width="100%" id="page_views" ></canvas>
                                         </div>
@@ -84,8 +84,8 @@ const Dashboard = props => {
                                         </div> */}
                                         </div>
                                     </div>
-                                    <div class="white_card_body d-flex align-items-center" style={{ height: '140px' }}  >
-                                        <h4 class="f_w_900 f_s_60 mb-0 mr-2" style={{ fontSize: '34px' }} >356</h4>
+                                    <div class="white_card_body d-flex align-items-center" style={{ height: '100px' }}  >
+                                        {/* <h4 class="f_w_900 f_s_60 mb-0 mr-2" style={{ fontSize: '34px' }} ></h4> */}
                                         <div class="w-100" style={{ height: '100px' }} >
                                             <canvas width="100%" id="page_views" ></canvas>
                                         </div>
@@ -116,8 +116,8 @@ const Dashboard = props => {
                                         </div> */}
                                         </div>
                                     </div>
-                                    <div class="white_card_body d-flex align-items-center" style={{ height: '140px' }}  >
-                                        <h4 class="f_w_900 f_s_60 mb-0 mr-2" style={{ fontSize: '34px' }} >356</h4>
+                                    <div class="white_card_body d-flex align-items-center" style={{ height: '100px' }}  >
+                                        {/* <h4 class="f_w_900 f_s_60 mb-0 mr-2" style={{ fontSize: '34px' }} ></h4> */}
                                         <div class="w-100" style={{ height: '100px' }} >
                                             <canvas width="100%" id="page_views" ></canvas>
                                         </div>
