@@ -188,7 +188,11 @@ const Category_List = () => {
                                                             categoryView.length > 0 && categoryView.map((item, index) => (
                                                                 <tr>
                                                                     <th scope="row">{index + 1}</th>
-                                                                    <td><img src="/img/banner.png" style={{ height: '30px', width: '80px' }} /></td>
+                                                                    <td>
+                                                                        {/* <i className='fa fa-tint' style={{fontSize : '20px', color :'#00918e'}}></i> */}
+                                                                        <i className={item?.image} style={{fontSize : '20px', color :'#00918e'}}></i>
+                                                                        {/* <img src="/img/banner.png" style={{ height: '30px', width: '80px' }} /> */}
+                                                                        </td>
                                                                     <td>{item.name}</td>
                                                                     <td>{item.status ? <div className="color-green cursor-pointer" onClick={() => changeStatus(item._id, item.status)}>Active</div> : <div className="color-red cursor-pointer" onClick={() => changeStatus(item._id, item.status)}>Inactive</div>}</td>
                                                                     <td class="flex">
