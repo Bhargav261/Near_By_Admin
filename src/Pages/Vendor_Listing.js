@@ -4,9 +4,10 @@ import Search from '../Common_Component/Search';
 import { useSelector, useDispatch } from 'react-redux';
 import { debounce } from "lodash";
 import Button from '../Common_Component/Button';
-import { VendorListAPI, vendorListStatus } from '../Redux/Listing/Listing';
+import { isLoadingVendorStatus, VendorListAPI, vendorListStatus } from '../Redux/Listing/Listing';
 import { useParams, useHistory } from 'react-router-dom';
 import NoDataFound from '../Common_Component/NoDataFound';
+import Loading from '../Common_Component/Loading';
 
 const VendorListing = ({ type }) => {
 
@@ -16,7 +17,7 @@ const VendorListing = ({ type }) => {
     const { name } = useParams();
 
     //get data from store
-    const { isVendorListStatus, vendorList } = useSelector(state => state.category);
+    const { isLoadingVendor, isVendorListStatus, vendorList } = useSelector(state => state.category);
 
     //Manage State
     const [search, setSearch] = useState('');
@@ -57,7 +58,8 @@ const VendorListing = ({ type }) => {
         } else if (type == 'vendorList') {
             status = 'active'
         }
-        dispatch(VendorListAPI({ type: status, search: search, todays: type == "today's"?true:false }))
+        dispatch(isLoadingVendorStatus(true));
+        dispatch(VendorListAPI({ type: status, search: search, todays: type == "today's" ? true : false }))
     }
 
     //Click on View Details
@@ -140,44 +142,51 @@ const VendorListing = ({ type }) => {
                                     </thead>
                                     <tbody>
                                         {
-                                            viewData?.length > 0 ?
-                                                viewData?.length > 0 && viewData.map((item, index) => (
-                                                    <tr>
-                                                        <td class="f_s_14 f_w_400">{index + 1}</td>
-                                                        <td class="f_s_14 f_w_400">{item?.userDetails[0]?.user_name}</td>
-                                                        <td class="f_s_14 f_w_400">{item?.userDetails[0]?.contact_number}</td>
-                                                        <td class="f_s_14 f_w_400">{item?.categoryDeatils[0]?.name}</td>
-                                                        <td class="f_s_14 f_w_400">{item?.vendorDetails[0]?.shop_name}</td>
-                                                        <td class="f_s_14 f_w_400">{item?.shop_pincode}</td>
-                                                        <td class="f_s_14 f_w_400">
-                                                            {
-                                                                type == 'cancelRequest' ?
-                                                                    <div className="cursor-pointer" title='Cancel Request'>
-                                                                        <span className="color-red">Reject</span>
-                                                                    </div>
-                                                                    :
-                                                                    <div className="flex">
-                                                                        <div className="cursor-pointer" onClick={() => clickOnView(item, 'info')} title='View Shop Details' style={{ marginRight: '10px' }}>
-                                                                            <i className="fa fa-eye template-color"></i>
-                                                                        </div>
-                                                                        {
-                                                                            type == 'vendorList' && (
-                                                                                <div className="cursor-pointer" onClick={() => clickOnView(item, 'service')} title='View Shop Service'>
-                                                                                    <i class="fa fa-align-justify template-color"></i>
-                                                                                </div>
-                                                                            )
-                                                                        }
-                                                                    </div>
-                                                            }
-                                                        </td>
-                                                    </tr>
-                                                ))
-                                                :
+                                            isLoadingVendor ?
                                                 <tr>
                                                     <td colSpan={10}>
-                                                        <NoDataFound msg={"Not Request Found!!"} />
+                                                        <Loading />
                                                     </td>
                                                 </tr>
+                                                :
+                                                viewData?.length > 0 ?
+                                                    viewData?.length > 0 && viewData.map((item, index) => (
+                                                        <tr>
+                                                            <td class="f_s_14 f_w_400">{index + 1}</td>
+                                                            <td class="f_s_14 f_w_400">{item?.userDetails[0]?.user_name}</td>
+                                                            <td class="f_s_14 f_w_400">{item?.userDetails[0]?.contact_number}</td>
+                                                            <td class="f_s_14 f_w_400">{item?.categoryDeatils[0]?.name}</td>
+                                                            <td class="f_s_14 f_w_400">{item?.vendorDetails[0]?.shop_name}</td>
+                                                            <td class="f_s_14 f_w_400">{item?.shop_pincode}</td>
+                                                            <td class="f_s_14 f_w_400">
+                                                                {
+                                                                    type == 'cancelRequest' ?
+                                                                        <div className="cursor-pointer" title='Cancel Request'>
+                                                                            <span className="color-red">Reject</span>
+                                                                        </div>
+                                                                        :
+                                                                        <div className="flex">
+                                                                            <div className="cursor-pointer" onClick={() => clickOnView(item, 'info')} title='View Shop Details' style={{ marginRight: '10px' }}>
+                                                                                <i className="fa fa-eye template-color"></i>
+                                                                            </div>
+                                                                            {
+                                                                                type == 'vendorList' && (
+                                                                                    <div className="cursor-pointer" onClick={() => clickOnView(item, 'service')} title='View Shop Service'>
+                                                                                        <i class="fa fa-align-justify template-color"></i>
+                                                                                    </div>
+                                                                                )
+                                                                            }
+                                                                        </div>
+                                                                }
+                                                            </td>
+                                                        </tr>
+                                                    ))
+                                                    :
+                                                    <tr>
+                                                        <td colSpan={10}>
+                                                            <NoDataFound msg={"Not Request Found!!"} />
+                                                        </td>
+                                                    </tr>
                                         }
                                     </tbody>
                                 </table>

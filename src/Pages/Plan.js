@@ -6,7 +6,8 @@ import AddPlan from './Add_Plan';
 import { debounce } from "lodash";
 import { useSelector, useDispatch } from 'react-redux';
 import NoDataFound from '../Common_Component/NoDataFound';
-import { PlanListAPI, deletePlanAPI, deletePlanStatus, changeStatusPlanAPI, changePlanStatusData } from '../Redux/Listing/Listing';
+import Loading from '../Common_Component/Loading';
+import { isLoadingPlanStatus, PlanListAPI, deletePlanAPI, deletePlanStatus, changeStatusPlanAPI, changePlanStatusData } from '../Redux/Listing/Listing';
 
 const Plan = () => {
 
@@ -14,7 +15,7 @@ const Plan = () => {
     const dispatch = useDispatch();
 
     //get data from store
-    const { isPlanStatus, isChangePlanStatusAPI, planResource, isDeletePlan } = useSelector(state => state.category);
+    const { isLoadingPlan, isPlanStatus, isChangePlanStatusAPI, planResource, isDeletePlan } = useSelector(state => state.category);
 
     //Manage Status
     const [search, setSearch] = useState('');
@@ -35,6 +36,7 @@ const Plan = () => {
     }, [])
 
     useEffect(() => {
+        dispatch(isLoadingPlanStatus(true));
         dispatch(PlanListAPI({ data: 'ABC' }));
     }, [callAPI])
 
@@ -123,6 +125,7 @@ const Plan = () => {
     //Debounce Search
     const debounceSearch = useCallback(
         debounce((searchData) => {
+            dispatch(isLoadingPlanStatus(true));
             dispatch(PlanListAPI({ search: searchData }));
         }, 500), []
     );
@@ -179,30 +182,37 @@ const Plan = () => {
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        viewPlan?.length > 0 ?
-                                                            viewPlan?.length > 0 && viewPlan && viewPlan.map((item, index) => (
-                                                                <tr>
-                                                                    <th scope="row">{index + 1}</th>
-                                                                    <td>{item.name}</td>
-                                                                    <td>{item.plan_type}</td>
-                                                                    <td>₹ {item.plan_price}</td>
-                                                                    <td>{item.status ? <div className="color-green cursor-pointer" onClick={() => changeStatus(item._id, item.status)}>Active</div> : <div className="color-red cursor-pointer" onClick={() => changeStatus(item._id, item.status)}>Inactive</div>}</td>
-                                                                    <td class="flex">
-                                                                        <div class="mr-2">
-                                                                            <Button variant='fa-edit' onClick={() => clickonEdit(item)} />
-                                                                        </div>
-                                                                        <div>
-                                                                            <Button variant='fa-trash' onClick={() => clickonDelete(item)} />
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            ))
-                                                            :
+                                                        isLoadingPlan ?
                                                             <tr>
                                                                 <td colSpan={10}>
-                                                                    <NoDataFound msg={"Plan Not Found!!"} />
+                                                                    <Loading />
                                                                 </td>
                                                             </tr>
+                                                            :
+                                                            viewPlan?.length > 0 ?
+                                                                viewPlan?.length > 0 && viewPlan && viewPlan.map((item, index) => (
+                                                                    <tr>
+                                                                        <th scope="row">{index + 1}</th>
+                                                                        <td>{item.name}</td>
+                                                                        <td>{item.plan_type}</td>
+                                                                        <td>₹ {item.plan_price}</td>
+                                                                        <td>{item.status ? <div className="color-green cursor-pointer" onClick={() => changeStatus(item._id, item.status)}>Active</div> : <div className="color-red cursor-pointer" onClick={() => changeStatus(item._id, item.status)}>Inactive</div>}</td>
+                                                                        <td class="flex">
+                                                                            <div class="mr-2">
+                                                                                <Button variant='fa-edit' onClick={() => clickonEdit(item)} />
+                                                                            </div>
+                                                                            <div>
+                                                                                <Button variant='fa-trash' onClick={() => clickonDelete(item)} />
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                ))
+                                                                :
+                                                                <tr>
+                                                                    <td colSpan={10}>
+                                                                        <NoDataFound msg={"Plan Not Found!!"} />
+                                                                    </td>
+                                                                </tr>
 
                                                     }
                                                 </tbody>

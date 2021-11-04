@@ -9,8 +9,8 @@ export const CategoryListAPI = createAsyncThunk('Category Listing API Call', asy
 
         console.log("Call Category API CALL");
 
-        const response = await axios.post("admin/category",{
-            search : search
+        const response = await axios.post("admin/category", {
+            search: search
         });
         const responseData = response.data;
 
@@ -112,8 +112,8 @@ export const changeStatusAPI = createAsyncThunk('Change SttausAPI Call', async (
 export const PlanListAPI = createAsyncThunk('Plan Listing API Call', async ({ search }, { dispatch, rejectWithValue }) => {
     try {
 
-        const response = await axios.post("admin/plan",{
-            search : search
+        const response = await axios.post("admin/plan", {
+            search: search
         });
         const responseData = response.data;
 
@@ -213,8 +213,8 @@ export const VendorListAPI = createAsyncThunk('Vendor Listing API Call', async (
 
         const response = await axios.post("admin/vendorList", {
             type: type,
-            search : search,
-            todays:todays
+            search: search,
+            todays: todays
         });
         const responseData = response.data;
 
@@ -273,7 +273,11 @@ export const slice = createSlice({
 
         isVendorListStatus: false,
         vendorList: [],
-        isVendorShopRequest: false
+        isVendorShopRequest: false,
+
+        isLoadingCategory: true,
+        isLoadingPlan: true,
+        isLoadingVendor: true
     },
     reducers: {
         categoryStatus: (state, action) => {
@@ -307,16 +311,28 @@ export const slice = createSlice({
         },
         vendorShopRequestStatus: (state, action) => {
             state.isVendorShopRequest = action.payload;
+        },
+
+        isLoadingCategoryStatus: (state, action) => {
+            state.isLoadingCategory = action.payload;
+        },
+        isLoadingPlanStatus: (state, action) => {
+            state.isLoadingPlan = action.payload;
+        },
+        isLoadingVendorStatus: (state, action) => {
+            state.isLoadingVendor = action.payload;
         }
     },
     extraReducers: {
         [CategoryListAPI.fulfilled]: (state, action) => {
             state.isCategoryStatus = true;
-            state.categoryResource = action.payload.data.payload.data.data;;
+            state.categoryResource = action.payload.data.payload.data.data;
+            state.isLoadingCategory = false;
         },
         [CategoryListAPI.rejected]: (state, action) => {
             state.isCategoryStatus = false;
             state.categoryResource = [];
+            state.isLoadingCategory = false;
         },
         [AddCategoryAPI.fulfilled]: (state, action) => {
             state.isAddCategoryStatus = true;
@@ -341,11 +357,13 @@ export const slice = createSlice({
         [PlanListAPI.fulfilled]: (state, action) => {
             state.isPlanStatus = true;
             state.planResource = action.payload.data.payload.data.data;
+            state.isLoadingPlan = false;
             // state.planResource = [];
         },
         [PlanListAPI.rejected]: (state, action) => {
             state.isPlanStatus = false;
             state.planResource = [];
+            state.isLoadingPlan = false;
         },
         [AddPlanAPI.fulfilled]: (state, action) => {
             state.isAddPlanStatus = true;
@@ -369,11 +387,13 @@ export const slice = createSlice({
         [VendorListAPI.fulfilled]: (state, action) => {
             state.isVendorListStatus = true;
             state.vendorList = action.payload.data.payload.data.data;
+            state.isLoadingVendor = false;
             // state.vendorList = [];
         },
         [VendorListAPI.rejected]: (state, action) => {
             state.isVendorListStatus = false;
             state.vendorList = [];
+            state.isLoadingVendor = false;
         },
         [VendorShopRequestAPI.fulfilled]: (state, action) => {
             state.isVendorShopRequest = true;
@@ -388,7 +408,8 @@ export const slice = createSlice({
 
 export const { categoryStatus, addCategoryStatus, deleteCategoryStatus, changeStatusData,
     planStatus, addPlanStatus, deletePlanStatus, changePlanStatusData,
-    vendorListStatus, vendorShopRequestStatus
+    vendorListStatus, vendorShopRequestStatus,
+    isLoadingCategoryStatus, isLoadingVendorStatus, isLoadingPlanStatus
 } = slice.actions;
 
 export default slice.reducer;

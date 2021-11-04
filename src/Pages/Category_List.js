@@ -6,7 +6,8 @@ import Add_Category from './Add_Category';
 import { useSelector, useDispatch } from 'react-redux';
 import { debounce } from "lodash";
 import NoDataFound from '../Common_Component/NoDataFound';
-import { CategoryListAPI, deleteCategoryAPI, deleteCategoryStatus, changeStatusAPI, changeStatusData } from '../Redux/Listing/Listing';
+import Loading from '../Common_Component/Loading'
+import { isLoadingCategoryStatus, CategoryListAPI, deleteCategoryAPI, deleteCategoryStatus, changeStatusAPI, changeStatusData } from '../Redux/Listing/Listing';
 
 const Category_List = () => {
 
@@ -14,7 +15,7 @@ const Category_List = () => {
     const dispatch = useDispatch();
 
     //get data from store
-    const { isCategoryStatus, isChangeStatusAPI, categoryResource, isDeleteCategory } = useSelector(state => state.category);
+    const { isLoadingCategory, isCategoryStatus, isChangeStatusAPI, categoryResource, isDeleteCategory } = useSelector(state => state.category);
 
     console.log("categoryResource :- ", categoryResource);
 
@@ -37,6 +38,7 @@ const Category_List = () => {
     }, [])
 
     useEffect(() => {
+        dispatch(isLoadingCategoryStatus(true));
         dispatch(CategoryListAPI({ search: '' }));
     }, [callAPI])
 
@@ -127,6 +129,7 @@ const Category_List = () => {
     //Debounce Search
     const debounceSearch = useCallback(
         debounce((searchData) => {
+            dispatch(isLoadingCategoryStatus(true));
             dispatch(CategoryListAPI({ search: searchData }));
         }, 500), []
     );
@@ -184,32 +187,39 @@ const Category_List = () => {
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        categoryView.length > 0 ?
-                                                            categoryView.length > 0 && categoryView.map((item, index) => (
-                                                                <tr>
-                                                                    <th scope="row">{index + 1}</th>
-                                                                    <td>
-                                                                        {/* <i className='fa fa-tint' style={{fontSize : '20px', color :'#00918e'}}></i> */}
-                                                                        <i className={item?.image} style={{fontSize : '20px', color :'#00918e'}}></i>
-                                                                        {/* <img src="/img/banner.png" style={{ height: '30px', width: '80px' }} /> */}
-                                                                        </td>
-                                                                    <td>{item.name}</td>
-                                                                    <td>{item.status ? <div className="color-green cursor-pointer" onClick={() => changeStatus(item._id, item.status)}>Active</div> : <div className="color-red cursor-pointer" onClick={() => changeStatus(item._id, item.status)}>Inactive</div>}</td>
-                                                                    <td class="flex">
-                                                                        <div class="mr-2">
-                                                                            <Button variant='fa-edit' onClick={() => clickonEdit(item)} />
-                                                                        </div>
-                                                                        <div>
-                                                                            <Button variant='fa-trash' onClick={() => clickonDelete(item)} />
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            )) :
+                                                        isLoadingCategory ?
                                                             <tr>
                                                                 <td colSpan={10}>
-                                                                    <NoDataFound msg={"Category Not Found!!"}/>
+                                                                    <Loading />
                                                                 </td>
                                                             </tr>
+                                                            :
+                                                            categoryView.length > 0 ?
+                                                                categoryView.length > 0 && categoryView.map((item, index) => (
+                                                                    <tr>
+                                                                        <th scope="row">{index + 1}</th>
+                                                                        <td>
+                                                                            {/* <i className='fa fa-tint' style={{fontSize : '20px', color :'#00918e'}}></i> */}
+                                                                            <i className={item?.image} style={{ fontSize: '20px', color: '#00918e' }}></i>
+                                                                            {/* <img src="/img/banner.png" style={{ height: '30px', width: '80px' }} /> */}
+                                                                        </td>
+                                                                        <td>{item.name}</td>
+                                                                        <td>{item.status ? <div className="color-green cursor-pointer" onClick={() => changeStatus(item._id, item.status)}>Active</div> : <div className="color-red cursor-pointer" onClick={() => changeStatus(item._id, item.status)}>Inactive</div>}</td>
+                                                                        <td class="flex">
+                                                                            <div class="mr-2">
+                                                                                <Button variant='fa-edit' onClick={() => clickonEdit(item)} />
+                                                                            </div>
+                                                                            <div>
+                                                                                <Button variant='fa-trash' onClick={() => clickonDelete(item)} />
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                )) :
+                                                                <tr>
+                                                                    <td colSpan={10}>
+                                                                        <NoDataFound msg={"Category Not Found!!"} />
+                                                                    </td>
+                                                                </tr>
                                                     }
                                                 </tbody>
                                             </table>
