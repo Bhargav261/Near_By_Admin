@@ -13,8 +13,6 @@ const Add_Category = ({ editData, closeModal }) => {
     //get data from store
     const { isAddCategoryStatus } = useSelector(state => state.category);
 
-    console.log("Edit Data :- ", editData);
-
     //State Manage
     const [isLoading, setIsLoading] = useState(false);
     const [show, setShow] = useState(false);
@@ -65,15 +63,12 @@ const Add_Category = ({ editData, closeModal }) => {
 
     //onSubmit
     const formSubmit = (e) => {
-        e.preventDefault();
-        console.log("Form : -", form);
+        e.preventDefault(); 
         setIsLoading(true);
         // setTimeout(() => {
         //     setIsLoading(false); 
         // }, 3000);
-        // console.log("Form : -", form);
         if (form.name != '') {
-            console.log("call in if");
             dispatch(AddCategoryAPI(
                 { id: editData.type == 'edit' ? (editData.data._id) : '', type: editData.type, name: form.name, status : editData.type == 'edit' ? editData.data.status : true }
             ));

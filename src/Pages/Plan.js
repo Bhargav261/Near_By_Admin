@@ -93,7 +93,6 @@ const Plan = () => {
     //Click On Change Status
     const changeStatus = (id, status) => {
         dispatch(changeStatusPlanAPI({ id: id, status: !status }))
-        console.log("clickon Change Status :- ");
     }
 
     //Show Delete Modal

@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const getData = createAsyncThunk('Counter Slice API CALL', async ({ price }, { dispatch, rejectWithValue }) => {
-    console.log("price:-", price);
     try {
         const response = await axios.get(`http://jsonplaceholder.typicode.com/users`);
         const responseData = {

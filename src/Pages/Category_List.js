@@ -15,9 +15,7 @@ const Category_List = () => {
     const dispatch = useDispatch();
 
     //get data from store
-    const { isLoadingCategory, isCategoryStatus, isChangeStatusAPI, categoryResource, isDeleteCategory } = useSelector(state => state.category);
-
-    console.log("categoryResource :- ", categoryResource);
+    const { isLoadingCategory, isCategoryStatus, isChangeStatusAPI, categoryResource, isDeleteCategory } = useSelector(state => state.category);    
 
     //State Manage
     const [callAPI, setCallAPI] = useState(false);
@@ -75,14 +73,12 @@ const Category_List = () => {
 
     //Add Event Click
     const addEvent = () => {
-        console.log("addEvent Call");
         editData.type = 'add';
         setViewModalStatus(true);
     }
 
     //Click on Edit
     const clickonEdit = (item) => {
-        console.log("Click on Edit");
         editData.type = 'edit';
         editData.data = item;
         setViewModalStatus(true);
@@ -90,7 +86,6 @@ const Category_List = () => {
 
     //Click on Delete
     const clickonDelete = (item) => {
-        console.log("Click on Trash");
         editData.deleteID = item._id;
         handleShow();
     }
@@ -107,8 +102,7 @@ const Category_List = () => {
     }
 
     //Close Modal
-    const closeModal = () => {
-        console.log('Close Modal');
+    const closeModal = () => { 
         editData.type = '';
         editData.data = '';
         setViewModalStatus(false);
@@ -122,7 +116,6 @@ const Category_List = () => {
 
     //Click on Chnage Status
     const changeStatus = (id, status) => {
-        console.log("Change Status :- ");
         dispatch(changeStatusAPI({ id: id, status: !status }))
     }
 

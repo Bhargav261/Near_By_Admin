@@ -18,7 +18,7 @@ const Tables = () => {
     }
 
     const addEvent = () => {
-        console.log("addEvent Call");
+        // console.log("addEvent Call");
     }
 
     return (

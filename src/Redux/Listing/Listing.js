@@ -4,17 +4,12 @@ import axios from 'axios';
 
 //View Category
 export const CategoryListAPI = createAsyncThunk('Category Listing API Call', async ({ search }, { dispatch, rejectWithValue }) => {
-    console.log("Call API :- ", search);
     try {
-
-        console.log("Call Category API CALL");
 
         const response = await axios.post("admin/category", {
             search: search
         });
         const responseData = response.data;
-
-        console.log("responseData :- ", responseData);
 
         if (responseData.status === "success") {
             // dispatch(SuccessAlert(responseData.msg));
@@ -31,7 +26,6 @@ export const CategoryListAPI = createAsyncThunk('Category Listing API Call', asy
 
 //Add Edit Category
 export const AddCategoryAPI = createAsyncThunk('Add CategoryAPI Call', async ({ id, name, status }, { dispatch, rejectWithValue }) => {
-    console.log("Call API :- ", id, name, status);
     try {
 
         const response = await axios.post("admin/addEditCategory",
@@ -41,8 +35,6 @@ export const AddCategoryAPI = createAsyncThunk('Add CategoryAPI Call', async ({ 
                 status: status
             });
         const responseData = response.data;
-
-        console.log("responseData :- ", responseData);
 
         if (responseData.status === "success") {
             dispatch(SuccessAlert(responseData.msg));
@@ -59,14 +51,11 @@ export const AddCategoryAPI = createAsyncThunk('Add CategoryAPI Call', async ({ 
 
 //Change Staus Category
 export const deleteCategoryAPI = createAsyncThunk('Delete CategoryAPI Call', async ({ id }, { dispatch, rejectWithValue }) => {
-    console.log("Delete Category API :- ", id);
     try {
         const response = await axios.post("admin/deleteCategory", {
             id: id
         });
         const responseData = response.data;
-
-        console.log("responseData :- ", responseData);
 
         if (responseData.status === "success") {
             dispatch(SuccessAlert(responseData.msg));
@@ -83,15 +72,12 @@ export const deleteCategoryAPI = createAsyncThunk('Delete CategoryAPI Call', asy
 
 //Delete Category
 export const changeStatusAPI = createAsyncThunk('Change SttausAPI Call', async ({ id, status }, { dispatch, rejectWithValue }) => {
-    console.log("Chnage  Category API :- ", id, status);
     try {
         const response = await axios.post("admin/changeCategoryStatus", {
             id: id,
             status: status
         });
         const responseData = response.data;
-
-        console.log("responseData :- ", responseData);
 
         if (responseData.status === "success") {
             dispatch(SuccessAlert(responseData.msg));
@@ -166,8 +152,6 @@ export const deletePlanAPI = createAsyncThunk('Delete PlanAPI Call', async ({ id
         });
         const responseData = response.data;
 
-        console.log("responseData :- ", responseData);
-
         if (responseData.status === "success") {
             dispatch(SuccessAlert(responseData.msg));
             return response;
@@ -208,7 +192,6 @@ export const changeStatusPlanAPI = createAsyncThunk('Change Status Plan API Call
 //Vendor Shop Request Data
 export const VendorListAPI = createAsyncThunk('Vendor Listing API Call', async ({ type, search, todays }, { dispatch, rejectWithValue }) => {
 
-    console.log("Vendor List API :- ", search, type);
     try {
 
         const response = await axios.post("admin/vendorList", {

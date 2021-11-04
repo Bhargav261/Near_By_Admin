@@ -34,10 +34,6 @@ class Auth {
         const decoded = jwtDecode(access_token);
         const currentTime = Date.now() / 1000;
 
-        console.log("decoded.exp :- ", decoded.exp);
-
-        console.log("currentTime :- ", currentTime);
-
         if (decoded.exp < currentTime) {
             localStorage.removeItem('Near_By_You_Admin_Token');
             localStorage.removeItem('Near_By_You_Admin');

@@ -35,11 +35,6 @@ const AppPage = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        // console.log("nme: - ",name, value);
-
-        console.log("name :- ", name);
-        console.log("value :- ", value);
-
         let setData = "";
 
         if (name == "checkme") {
@@ -63,7 +58,6 @@ const AppPage = () => {
     //onSubmit
     const formSubmit = (e) => {
         e.preventDefault();
-        console.log("Form : -", form);
     }
 
     return (

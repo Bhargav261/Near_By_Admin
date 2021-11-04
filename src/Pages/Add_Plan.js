@@ -8,8 +8,6 @@ import { useSelector, useDispatch } from 'react-redux';
 
 const AddPlan = ({ editData, closeModal }) => {
 
-    console.log("editData- ", editData);
-
     //Objects
     const dispatch = useDispatch();
 
@@ -76,7 +74,6 @@ const AddPlan = ({ editData, closeModal }) => {
     //onSubmit
     const formSubmit = (e) => {
         e.preventDefault();
-        console.log("Form : -", form);
         setIsLoading(true);
         if (form.name != '' && form.type != "" && form.price != '') {
             dispatch(AddPlanAPI(

@@ -41,11 +41,6 @@ const Add_Category = ({ closeModal }) => {
     const handleFormChange = (e) => {
         const { name, value } = e.target;
 
-        // console.log("nme: - ",name, value);
-
-        console.log("name :- ", name);
-        console.log("value :- ", value);
-
         let setData = "";
 
         if (name == "checkme") {
@@ -69,7 +64,6 @@ const Add_Category = ({ closeModal }) => {
     //onSubmit
     const formSubmit = (e) => {
         e.preventDefault();
-        console.log("Form : -", form);
         setIsLoading(true);
         dispatch(SuccessAlert('Insert Successfully'));
         setTimeout(() => {

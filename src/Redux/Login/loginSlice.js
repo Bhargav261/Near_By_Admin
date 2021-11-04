@@ -3,7 +3,6 @@ import { ErrorAlert, SuccessAlert } from '../SanckBar/SnackbarSlice';
 import axios from 'axios';
 
 export const LoginAPI = createAsyncThunk('Login API CALL', async ({ email, password }, { dispatch, rejectWithValue }) => {
-    console.log("loginAPI :-", { email, password });
     try {
         const response = await axios.post("admin/login",
             {
@@ -11,8 +10,6 @@ export const LoginAPI = createAsyncThunk('Login API CALL', async ({ email, passw
                 password: password,
             });
         const responseData = response.data;
-
-        console.log("responseData :- ", responseData);
 
         if (responseData.status === "success") {
 

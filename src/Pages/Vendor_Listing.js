@@ -64,7 +64,6 @@ const VendorListing = ({ type }) => {
 
     //Click on View Details
     const clickOnView = (data, type) => {
-        console.log("Click on View");
         setShowViewType(type);
         setViewInfo(data);
         setViewStatus(true);
@@ -74,7 +73,6 @@ const VendorListing = ({ type }) => {
     const closeModal = () => {
         setViewStatus(false);
         setCallAPI(!callAPI);
-        console.log("Close Modal");
     }
 
     //onChnage Handler

@@ -8,9 +8,7 @@ const AlertSnackBar = () => {
 
     const dispatch = useDispatch();
 
-    const { type, status, msg } = useSelector(state => state.Alert);
-
-    console.log("type, status, msg", type, status, msg);
+    const { type, status, msg } = useSelector(state => state.Alert);    
 
     useEffect(() => {
         if (status) {

@@ -7,8 +7,6 @@ import { useSelector, useDispatch } from 'react-redux';
 
 const VendorModal = ({ showViewType, closeModal, viewInfo, type }) => {
 
-    console.log("Close Modal, viewInfo :- ", viewInfo);
-
     //Objects
     const dispatch = useDispatch();
 
@@ -50,13 +48,11 @@ const VendorModal = ({ showViewType, closeModal, viewInfo, type }) => {
 
     //Accept Request
     const acceptReq = (id) => {
-        console.log("Accept Request");
         dispatch(VendorShopRequestAPI({ id: id, type: 'accept' }));
     }
 
     //Reject Request
     const rejectReq = (id) => {
-        console.log("Reject Request");
         // dispatch(VendorShopRequestAPI({ id: id, type: 'reject' }));
         handleShowRejectModal();
     }
@@ -81,14 +77,11 @@ const VendorModal = ({ showViewType, closeModal, viewInfo, type }) => {
     const formSubmit = (e) => {
         e.preventDefault();
         setIsLoading(true);
-        console.log("Reason :- ", reason);
         dispatch(VendorShopRequestAPI({ id: viewInfo?._id, type: 'reject', reason: reason }));
         setIsLoading(false);
         handleCloseRejectModal();
         handleClose();
     }
-
-    console.log("viewInfo :-");
 
     return (
         <>
