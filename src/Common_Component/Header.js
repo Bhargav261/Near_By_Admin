@@ -1,7 +1,22 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 const Header = () => {
+
+    //Object
+    const history  = useHistory();
+
+    //Functions
+
+    //logout 
+    const logout = () => {
+        console.log("Logout");
+        localStorage.removeItem('Near_By_You_Admin');
+        localStorage.removeItem('Near_By_You_Admin_Token');
+        history.push('/login')
+    }
+
+
     return (
         <>
             <div class="container-fluid no-gutters">
@@ -28,7 +43,7 @@ const Header = () => {
                                         <div class="profile_info_details">
                                             <a href="#">My Profile </a>
                                             <a href="#">Settings</a>
-                                            <NavLink to="/login">Log Out </NavLink>
+                                            <a href="#" onClick={logout}>Log Out </a>
                                         </div>
                                     </div>
                                 </div>
