@@ -111,14 +111,16 @@ const Plan = () => {
     }
 
     //Close Modal
-    const closeModal = () => {
+    const closeModal = (status) => {
         setEditData({
             deleteID: '',
             data: '',
             type: ''
         })
         setViewModalStatus(false);
-        setCallAPI(!callAPI);
+        if(status){
+            setCallAPI(!callAPI);
+        }
     }
 
     //Debounce Search

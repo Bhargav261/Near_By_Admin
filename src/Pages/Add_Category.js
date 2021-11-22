@@ -35,16 +35,16 @@ const Add_Category = ({ editData, closeModal }) => {
 
     useEffect(() => {
         if(isAddCategoryStatus){
-            handleClose();   
+            handleClose(true);   
         }
     },[isAddCategoryStatus])
 
     //Functions
 
     //Close Modal
-    const handleClose = () => {
+    const handleClose = (status) => {
         setShow(false);
-        closeModal();
+        closeModal(status);
     };
 
     //Show Modal

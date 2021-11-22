@@ -29,16 +29,16 @@ const VendorModal = ({ showViewType, closeModal, viewInfo, type }) => {
     useEffect(() => {
         if (isVendorShopRequest) {
             dispatch(vendorShopRequestStatus(false));
-            handleClose();
+            handleClose(true);
         }
     }, [isVendorShopRequest])
 
     //Functions
 
     //Close Modal
-    const handleClose = () => {
+    const handleClose = (status) => {
         setShow(false);
-        closeModal();
+        closeModal(status);
     }
 
     //Show Modal

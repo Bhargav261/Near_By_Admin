@@ -45,16 +45,16 @@ const AddPlan = ({ editData, closeModal }) => {
 
     useEffect(() => {
         if (isAddPlanStatus) {
-            handleClose();
+            handleClose(true);
         }
     }, [isAddPlanStatus])
 
     //Functions
 
     //Close Modal
-    const handleClose = () => {
+    const handleClose = (status) => {
         setShow(false);
-        closeModal();
+        closeModal(status);
     };
 
     //Show Modal

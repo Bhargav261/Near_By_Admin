@@ -70,9 +70,11 @@ const VendorListing = ({ type }) => {
     }
 
     //Close Modal
-    const closeModal = () => {
+    const closeModal = (status) => {
         setViewStatus(false);
-        setCallAPI(!callAPI);
+        if(status){
+            setCallAPI(!callAPI);
+        }
     }
 
     //onChnage Handler

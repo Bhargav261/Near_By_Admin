@@ -15,7 +15,7 @@ const Category_List = () => {
     const dispatch = useDispatch();
 
     //get data from store
-    const { isLoadingCategory, isCategoryStatus, isChangeStatusAPI, categoryResource, isDeleteCategory } = useSelector(state => state.category);    
+    const { isLoadingCategory, isCategoryStatus, isChangeStatusAPI, categoryResource, isDeleteCategory } = useSelector(state => state.category);
 
     //State Manage
     const [callAPI, setCallAPI] = useState(false);
@@ -102,11 +102,13 @@ const Category_List = () => {
     }
 
     //Close Modal
-    const closeModal = () => { 
+    const closeModal = (status) => {
         editData.type = '';
         editData.data = '';
         setViewModalStatus(false);
-        setCallAPI(!callAPI)
+        if (status) {
+            setCallAPI(!callAPI)
+        }
     }
 
     //Click on Yes Button

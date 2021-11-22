@@ -12,10 +12,11 @@ const Login = () => {
     const dispatch = useDispatch();
 
     //get data from store
-    const { isLoginStatus } = useSelector(state => state.login);    
+    const { isLoginStatus } = useSelector(state => state.login);
 
     //State Manage
     const [form, setForm] = useState({ email: '', password: '' });
+    const [loading, setLoading] = useState(false);
 
     //useeffect
     useEffect(() => {
@@ -34,6 +35,7 @@ const Login = () => {
             });
             history.push('/app/dashboard');
             dispatch(loginStatus(false));
+            setLoading(false);
         }
     }, [isLoginStatus])
 
@@ -58,8 +60,20 @@ const Login = () => {
         }
     }
 
+    //Default Login 
+    const defaultLogin = (e, userName, password) => {
+        e.preventDefault();
+        setLoading(true);
+        dispatch(LoginAPI({ email: userName, password: password }));
+    }
+
     return (
         <>
+            {
+                loading && (
+                    <div id="overlay"></div>
+                )
+            }
             <div class="main_content_iner" style={{ overflowX: 'hidden' }}>
                 <div class="container-fluid p-0">
                     <div class="row justify-content-center">
@@ -82,6 +96,9 @@ const Login = () => {
                                                     </div>
                                                     <button type="submit" class="btn_1 full_width text-center">Log in</button>
                                                 </form>
+                                                <div>
+                                                    <button type="button" onClick={(e) => defaultLogin(e, 'nearbyyouadmin@gmail.com', 'Admin@123')} class="btn_1 full_width text-center">Default Admin Login</button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
