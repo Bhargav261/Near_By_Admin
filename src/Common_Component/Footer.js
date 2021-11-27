@@ -8,7 +8,12 @@ const Footer = () => {
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="footer_iner text-center">
-                                <p>2020 © Influence - Designed by <a href="#"> <i class="ti-heart"></i> </a><a href="#"> Dashboard</a></p>
+                                <p>
+                                    Copyright &copy;
+                                <script>document.write(new Date().getFullYear());</script> All rights reserved <i class="icon-heart text-danger" aria-hidden="true"></i> by <a
+                                    href="https://colorlib.com/" target="_blank">Near By You</a>
+
+                                </p>
                             </div>
                         </div>
                     </div>

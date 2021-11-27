@@ -401,6 +401,14 @@ code {
     margin-top: 3px;
 }
 
+.primary-backgroundColor{
+  background-color: #00918e !important;
+}
+
+.primary-color{
+  color: #00918e !important;
+}
+
 /* Loader Css Start */
 .lds-facebook {
   display: inline-block;

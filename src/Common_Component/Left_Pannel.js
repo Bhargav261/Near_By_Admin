@@ -5,7 +5,10 @@ const Left_Pannel = () => {
     return (
         <nav class="sidebar vertical-scroll  ps-container ps-theme-default ps-active-y">
             <div class="logo d-flex justify-content-between">
-                <NavLink to="/app/dashboard"><img src="/img/logo.png" alt="" /></NavLink>
+                <NavLink to="/app/dashboard">
+                    <h4 className="primary-color">  <i class="fa fa-street-view" aria-hidden="true"></i> Near By You</h4>
+                    {/* <img src="/img/logo.png" alt="" /> */}
+                </NavLink>
                 <div class="sidebar_close_icon d-lg-none">
                     <i class="ti-close"></i>
                 </div>
